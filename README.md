@@ -50,6 +50,11 @@ Color(hex: "#aaaf") // rgba, the same as #AAAAAAFF
 Color(rgb: 0xfa6878)
 Color(rgba: 0xfa6878ff)
 Color.rgb(0xAAAAAA)
+
+// you can also get an rgb hex value of any color
+color1.hex()
+color2.hex()
+color3.hex()
 ```
 
 #### ColorSpaces
