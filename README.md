@@ -53,8 +53,8 @@ Color.rgb(0xAAAAAA)
 
 // you can also get an rgb hex value of any color
 color1.hex()
-color2.hex()
-color3.hex()
+color2.hex(uppercased: true)
+color3.hex(hashTagPrefix: true)
 ```
 
 #### ColorSpaces
