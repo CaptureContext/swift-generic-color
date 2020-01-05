@@ -10,19 +10,11 @@ extension CMYK.Container: Codable {}
 
 public enum CMYK: ColorSpace {
     
-    private enum Keys: String, CodingKey { case cmyk }
-    
     public struct Container: Equatable {
-        public let cyan: ColorComponent
-        public let magenta: ColorComponent
-        public let yellow: ColorComponent
-        public let key: ColorComponent
-    }
-    
-    public static func initialize(using decoder: Decoder) throws -> Self.Type {
-        guard try decoder.container(keyedBy: Keys.self).contains(.cmyk)
-        else { throw ColorSpaceDecodingError<CMYK>(key: Keys.cmyk) }
-        return CMYK.self
+        public var cyan: ColorComponent
+        public var magenta: ColorComponent
+        public var yellow: ColorComponent
+        public var key: ColorComponent
     }
     
 }

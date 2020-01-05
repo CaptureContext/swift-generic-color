@@ -20,4 +20,3 @@ extension StaticallyNamedType {
     public static var path: String { String(reflecting: type) }
     
 }
-

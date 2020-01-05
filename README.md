@@ -27,7 +27,7 @@ import GenericColor
 #### Initialization
 
 ```swift
-// initialize with byte value via .byte(_) method
+// Initialize with byte value via .byte(_) method
 let color1 = Color<RGB>(red: .byte(221),
                         green: .byte(51),
                         blue: .byte(12), 
@@ -35,9 +35,21 @@ let color1 = Color<RGB>(red: .byte(221),
 
 // or directly via numeric literals and .raw(_) method for numerics
 let alpha = 1
-let color2 = Color<RGB>(red: 221 / 255, green: 0.2, blue: .byte(12),  alpha: .raw(1))
+let color2 = Color<RGB>(red: 221 / 255, green: 0.2, blue: .byte(12),  alpha: .raw(alpha))
 
 print(color1 == color2) // true
+
+// hex initialization is supported for RGB color space
+// - works with "#" prefix and without, case-insensitive
+// - works with rgb, rgba, rrggbb, rrggbbaa representations
+// - avalible trough .hex and .init(hex:)
+Color.hex("FA6878") // Type == Color<RGB>?
+Color(hex: "#aaaf") // rgba, the same as #AAAAAAFF
+
+// or use hex literals
+Color(rgb: 0xfa6878)
+Color(rgba: 0xfa6878ff)
+Color.rgb(0xAAAAAA)
 ```
 
 #### ColorSpaces
@@ -45,18 +57,16 @@ print(color1 == color2) // true
 ```swift
 let color1 = Color<RGB>()
 let color2 = Color<HSB>()
-let color2 = Color<CMYK>()
+let color3 = Color<CMYK>()
 
-print(color1.mapToHSB() == color2)
+print(color1.map(to: HSB.self) == color2)
+print(color1.map(to: CMYK.self) == color3)
+print(color2.map(to: RGB.self) == color1)
+print(color2.map(to: CMYK.self) == color3)
+print(color3.map(to: RGB.self) == color1)
+print(color3.map(to: HSB.self) == color2)
 ```
 
-For now only RGB to HSB conversion is available, but we are working to provide more _(pull requests are welcome)_ 😉.
+## More
 
-For now you can use your custom conversions via:
-
-```swift
-Color<RGB>().map { color in 
-    // Some color mapping
-}
-```
-
+Check out higher-level framework [Palette](https://github.com/MakeupStudio/Palette) for more.

@@ -25,10 +25,10 @@ extension UIColor {
     }
     
     public convenience init(_ genericColor: Color<RGB>) {
-        self.init(red: CGFloat(genericColor.red),
-                  green: CGFloat(genericColor.green),
-                  blue: CGFloat(genericColor.blue),
-                  alpha: CGFloat(genericColor.alpha))
+        self.init(red: CGFloat(genericColor.red.value),
+                  green: CGFloat(genericColor.green.value),
+                  blue: CGFloat(genericColor.blue.value),
+                  alpha: CGFloat(genericColor.alpha.value))
     }
     
 }

@@ -11,12 +11,10 @@ extension HSB.Container: Codable {}
 public enum HSB: ColorSpace {
     
     public struct Container: Equatable {
-        public let hue: ColorComponent
-        public let saturation: ColorComponent
-        public let brightness: ColorComponent
+        public var hue: ColorComponent
+        public var saturation: ColorComponent
+        public var brightness: ColorComponent
     }
-    
-    
     
 }
 

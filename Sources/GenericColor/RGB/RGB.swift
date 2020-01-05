@@ -19,6 +19,13 @@ public enum RGB: ColorSpace {
 }
 
 extension RGB.Container {
+
+    func hex(uppercase: Bool = false, hashTagPrefix: Bool = false) -> String {
+        hashTagPrefix ? "#" : "" +
+        .init(Int(red.byteValue), radix: 16, uppercase: uppercase) +
+        .init(Int(green.byteValue), radix: 16, uppercase: uppercase) +
+        .init(Int(blue.byteValue), radix: 16, uppercase: uppercase)
+    }
     
     public func with(red value: ColorComponent) -> Self {
         .init(red: value, green: green, blue: blue)
