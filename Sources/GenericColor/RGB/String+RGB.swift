@@ -46,7 +46,10 @@ extension String {
             string += "f"
             fallthrough
         case 4:
-            chunks = string.chunked()
+            chunks = string.reduce(into: "") {
+                $0.append($1)
+                $0.append($1)
+            }.chunked(by: 2)
         case 6:
             string += "ff"
             fallthrough
