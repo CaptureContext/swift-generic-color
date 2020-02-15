@@ -8,6 +8,17 @@
 
 extension Color: Codable where Space.Container: Codable {}
 
+extension Color: _ExpressibleByColorLiteral where Space.Container: InitializableByRGBContainer {
+    
+    public init(_colorLiteralRed red: Float, green: Float, blue: Float, alpha: Float) {
+        container = .init(from: RGB.Container(red   : .raw(red),
+                                              green : .raw(green),
+                                              blue  : .raw(blue)))
+        self.alpha = .raw(alpha)
+    }
+    
+}
+
 @dynamicMemberLookup
 public struct Color<Space: ColorSpace>: Equatable {
     internal var container: Space.Container

@@ -24,6 +24,9 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     /// An alternative to init for Int type
     public static func raw(_ value: Int) -> Self { .init(value: Double(value)) }
     
+    /// An alternative to init for Float type
+    public static func raw(_ value: Float) -> Self { .init(value: Double(value)) }
+    
     /// An alternative to init
     public static func raw(_ value: Double) -> Self { .init(value: value) }
     
