@@ -72,6 +72,18 @@ print(color3.map(to: RGB.self) == color1)
 print(color3.map(to: HSB.self) == color2)
 ```
 
+## Installation
+
+Add the package to Your SwiftPM package dependencies:
+
+```swift
+.package(url: "https://github.com/MakeupStudio/GenericColor.git", from: "0.2.1")
+```
+
+then add `GenericColor` dependency to your target.
+
 ## More
+
+See tests for more usage examples.
 
 Check out higher-level framework [Palette](https://github.com/MakeupStudio/Palette) for more.
