@@ -4,10 +4,12 @@ import XCTest
 final class GenericColorsTests: XCTestCase {
     
     // test default init
-    var defaultColor: Color<RGB> = .init(red: .byte(250),
-                                         green: .byte(104),
-                                         blue: .byte(120),
-                                         alpha: .byte(255))
+    var defaultColor: Color<RGB> = .init(
+        red: .byte(250),
+        green: .byte(104),
+        blue: .byte(120),
+        alpha: .byte(255)
+    )
     var testableCollection: [(desc: String, color: Color<RGB>)] = []
     
     override func setUp() {
@@ -103,12 +105,25 @@ final class GenericColorsTests: XCTestCase {
         XCTAssertEqual(color, defaultColor)
     }
     
+    func testHexStringRepresentation() {
+        let color1 = Color<RGB>.hex(rgb: 0x00aabb)!
+        let color2 = Color<RGB>.hex(rgba:0x000)!
+        let color3 = Color<RGB>.hex(rgb: 0xffffff)!
+        let color4 = Color<RGB>.hex(rgba: 0xffffffaa)!
+        
+        XCTAssertEqual(color1.hex(uppercase: true, hashTagPrefix: true), "#00AABBFF")
+        XCTAssertEqual(color2.hex(uppercase: false, hashTagPrefix: false), "00000000")
+        XCTAssertEqual(color3.hex(uppercase: false, hashTagPrefix: true), "#ffffffff")
+        XCTAssertEqual(color4.hex(), "ffffffaa")
+    }
+    
     static var allTests = [
         ("testInitializers", testInitializers),
         ("testRgbToHsb", testRgbToHsb),
         ("testHsbToRgb", testHsbToRgb),
         ("testCmykToRgb", testCmykToRgb),
         ("testRgbToCmyk", testRgbToCmyk),
-        ("testCoding", testCoding)
+        ("testCoding", testCoding),
+        ("testHexStringRepresentation", testHexStringRepresentation)
     ]
 }

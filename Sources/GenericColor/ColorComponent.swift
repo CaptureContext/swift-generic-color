@@ -14,7 +14,7 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     private static let _max: Decimal = 1
     private static let _min: Decimal = 0
     private var _value: Decimal
-    private var _decimal: NSDecimalNumber { NSDecimalNumber(decimal: _value) }
+    private var _decimal: NSDecimalNumber { _value.nsDecimal }
     
     public static var max: Self { .init(value: _max) }
     public static var min: Self { .init(value: _min) }
@@ -39,12 +39,15 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     }
     
     public var byteValue: Int {
-        get { Int(NSDecimalNumber(decimal: decimalByteValue).intValue) }
+        get { decimalByteValue.rounded(0, .plain).nsDecimal.intValue }
         set { self = .byte(newValue) }
     }
     
     public func hex(uppercase: Bool = false) -> String {
-        String(byteValue, radix: 16, uppercase: uppercase)
+        let value = String(byteValue, radix: 16, uppercase: uppercase)
+        return value.count == 1
+            ? "0".appending(value)
+            : value
     }
     
     // MARK: Init

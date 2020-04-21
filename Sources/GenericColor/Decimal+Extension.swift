@@ -14,4 +14,6 @@ extension Decimal {
         NSDecimalRound(&result, &localCopy, scale, roundingMode)
         return result
     }
+    
+    var nsDecimal: NSDecimalNumber { .init(decimal: self) }
 }
