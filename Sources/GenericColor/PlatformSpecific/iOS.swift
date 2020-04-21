@@ -11,7 +11,7 @@ import UIKit
 
 extension ColorComponent {
     
-    public static func raw(_ value: CGFloat) -> Self { .init(value: Double(value)) }
+    public static func raw(_ value: CGFloat) -> Self { .raw(Double(value)) }
     public static func byte(_ value: CGFloat) -> Self { .byte(Double(value)) }
     
 }
@@ -24,13 +24,19 @@ extension UIColor {
         return .init(red: .raw(red), green: .raw(green), blue: .raw(blue), alpha: .raw(alpha))
     }
     
-    public convenience init(_ genericColor: Color<RGB>) {
-        self.init(red: CGFloat(genericColor.red.value),
-                  green: CGFloat(genericColor.green.value),
-                  blue: CGFloat(genericColor.blue.value),
-                  alpha: CGFloat(genericColor.alpha.value))
+    public convenience init<Space>(_ genericColor: Color<Space>)
+    where Space.Container: RGBProvider {
+        let color: Color<RGB> = genericColor.map(\.rgb)
+        self.init(red: CGFloat(color.red.doubleValue),
+                  green: CGFloat(color.green.doubleValue),
+                  blue: CGFloat(color.blue.doubleValue),
+                  alpha: CGFloat(color.alpha.doubleValue))
     }
     
+}
+
+extension Color where Space.Container: RGBProvider {
+    public var cocoaColor: UIColor { .init(self) }
 }
 
 #endif

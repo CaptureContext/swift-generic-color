@@ -26,7 +26,11 @@ extension HSB.Container: InitializableByRGBContainer, RGBProvider {
     ///
     /// https://en.wikipedia.org/wiki/HSL_and_HSV
     public var rgb: RGB.Container {
-        let hsb = (hue: hue.value, saturation: saturation.value, brightness: brightness.value)
+        let hsb = (
+            hue: hue.doubleValue,
+            saturation: saturation.doubleValue,
+            brightness: brightness.doubleValue
+        )
         let c = hsb.brightness * hsb.saturation
         let x = c * (1 - abs((hsb.hue * 6).truncatingRemainder(dividingBy: 2) - 1))
         let m = hsb.brightness - c
@@ -39,7 +43,7 @@ extension HSB.Container: InitializableByRGBContainer, RGBProvider {
         case 3..<4    : return .init(red: value(0), green: value(x), blue: value(c))
         case 4..<5    : return .init(red: value(x), green: value(0), blue: value(c))
         case 5..<6    : return .init(red: value(c), green: value(0), blue: value(x))
-        default       : return .init(red: 0, green: 0, blue: 0)
+        default       : return .init(red: 0.0, green: 0.0, blue: 0.0)
         }
     }
     

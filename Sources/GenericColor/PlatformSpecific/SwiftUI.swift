@@ -12,9 +12,18 @@ import SwiftUI
 @available(OSX 10.15, iOS 13, *)
 extension SwiftUI.Color {
     
-    public init(_ genericColor: Color<RGB>) {
+    public init<Space>(_ genericColor: Color<Space>)
+    where Space.Container: RGBProvider {
         self.init(.init(genericColor))
     }
     
 }
+
+extension Color where Space.Container: RGBProvider {
+    public var cgColor: CGColor { cocoaColor.cgColor }
+
+    @available(OSX 10.15, iOS 13, *)
+    public var color: SwiftUI.Color { .init(self) }
+}
+
 #endif

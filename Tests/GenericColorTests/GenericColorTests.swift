@@ -1,21 +1,13 @@
 import XCTest
 @testable import GenericColor
 
-extension ColorComponent {
-    // Reducing accuracy
-    var test: Double {
-        let precision: Double = pow(10, 10)
-        return .init(floor(value * precision)) / precision
-    }
-}
-
 final class GenericColorsTests: XCTestCase {
     
     // test default init
     var defaultColor: Color<RGB> = .init(red: .byte(250),
                                          green: .byte(104),
                                          blue: .byte(120),
-                                         alpha: 1)
+                                         alpha: .byte(255))
     var testableCollection: [(desc: String, color: Color<RGB>)] = []
     
     override func setUp() {
@@ -42,16 +34,8 @@ final class GenericColorsTests: XCTestCase {
     }
     
     func testInitializers() {
-        // test literal initializers (fails)
-        // - { r: 0.9803921580314636, g: 0.40784314274787903, b: 0.47058823704719543 } [Real]
-        // vs
-        // - { r: 0.9803921568627451, g: 0.40784313725490196, b: 0.47058823529411764 } [Expected]
-        
-        // let literal: Color<RGB> = #colorLiteral(red: 0.9803921568627451, green: 0.40784313725490196, blue: 0.47058823529411764, alpha: 1)
-        // XCTAssertEqual(literal, defaultColor)
-        
-        func hideWarning(for color: Color<RGB>) {}
-        hideWarning(for: #colorLiteral(red: 0.9803921568627451, green: 0.40784313725490196, blue: 0.47058823529411764, alpha: 1))
+    // let literal: Color<RGB> = #colorLiteral(red: 0.9803921568627451, green: 0.40784313725490196, blue: 0.47058823529411764, alpha: 1)
+    // XCTAssertEqual(literal, defaultColor)
         
         // test setup initializers
         testableCollection.forEach { XCTAssertEqual(defaultColor, $0.color, $0.desc) }
@@ -72,85 +56,43 @@ final class GenericColorsTests: XCTestCase {
     func testRgbToHsb() {
         let color = Color<HSB>(hue: 0.9817351598173516,
                                saturation: 0.584,
-                               brightness: 0.9803921568627451,
+                               brightness: 0.9803921568627453952,
                                alpha: 1.0)
-        testableCollection.forEach {
-            let hsb = $0.color.hsb // get hsb container
-            XCTAssertEqual(color.hue.test       , hsb.hue.test       , $0.desc)
-            XCTAssertEqual(color.saturation.test, hsb.saturation.test, $0.desc)
-            XCTAssertEqual(color.brightness.test, hsb.brightness.test, $0.desc)
-        }
-        testableCollection.forEach {
-            let hsba = $0.color.map(to: HSB.self) // get a new hsba color
-            XCTAssertEqual(color.hue.test       , hsba.hue.test       , $0.desc)
-            XCTAssertEqual(color.saturation.test, hsba.saturation.test, $0.desc)
-            XCTAssertEqual(color.brightness.test, hsba.brightness.test, $0.desc)
-            XCTAssertEqual(color.alpha.test     , hsba.alpha.test     , $0.desc)
-        }
+        XCTAssertEqual(defaultColor.hsb, color.container)
+        XCTAssertEqual(defaultColor.map(\.hsb), color)
+        XCTAssertEqual(defaultColor.map(to: HSB.self), color)
     }
     
     func testHsbToRgb() {
         let color = Color<HSB>(hue: 0.9817351598173516,
                                saturation: 0.584,
-                               brightness: 0.9803921568627451,
+                               brightness: 0.9803921568627453952,
                                alpha: 1.0)
-        let rgba = color.map(to: RGB.self) // map color to rgb
-        let rgb = color.rgb // get rgb container
-        testableCollection.forEach {
-            XCTAssertEqual($0.color.red.test  , rgb.red.test  , $0.desc)
-            XCTAssertEqual($0.color.green.test, rgb.green.test, $0.desc)
-            XCTAssertEqual($0.color.blue.test  , rgb.blue.test, $0.desc)
-        }
-        testableCollection.forEach {
-            XCTAssertEqual($0.color.red.test  , rgba.red.test  , $0.desc)
-            XCTAssertEqual($0.color.green.test, rgba.green.test, $0.desc)
-            XCTAssertEqual($0.color.blue.test , rgba.blue.test , $0.desc)
-            XCTAssertEqual($0.color.alpha.test, rgba.alpha.test, $0.desc)
-        }
-    }
-    
-    func testCmykToRgb() {
-        let color = Color<CMYK>(cyan: 0,
-                                magenta: 0.584,
-                                yellow: 0.52,
-                                key: 0.019607843137254943,
-                                alpha: 1)
-        let rgba = color.map(to: RGB.self)
-        let rgb = color.rgb
-        testableCollection.forEach {
-            XCTAssertEqual($0.color.red.test  , rgb.red.test  , $0.desc)
-            XCTAssertEqual($0.color.green.test, rgb.green.test, $0.desc)
-            XCTAssertEqual($0.color.blue.test , rgb.blue.test , $0.desc)
-        }
-        testableCollection.forEach {
-            XCTAssertEqual($0.color.red.test  , rgba.red.test  , $0.desc)
-            XCTAssertEqual($0.color.green.test, rgba.green.test, $0.desc)
-            XCTAssertEqual($0.color.blue.test , rgba.blue.test , $0.desc)
-            XCTAssertEqual($0.color.alpha.test, rgba.alpha.test, $0.desc)
-        }
+        XCTAssertEqual(color.rgb, defaultColor.container)
+        XCTAssertEqual(color.map(\.rgb), defaultColor)
+        XCTAssertEqual(color.map(to: RGB.self), defaultColor)
     }
     
     func testRgbToCmyk() {
-        let color = Color<CMYK>(cyan: 0,
+        let color = Color<CMYK>(cyan: .zero,
                                 magenta: 0.584,
                                 yellow: 0.52,
-                                key: 0.019607843137254943,
-                                alpha: 1)
-        testableCollection.forEach {
-            let cmyk = $0.color.cmyk
-            XCTAssertEqual(cmyk.cyan.test   , color.cyan.test   , $0.desc)
-            XCTAssertEqual(cmyk.magenta.test, color.magenta.test, $0.desc)
-            XCTAssertEqual(cmyk.yellow.test , color.yellow.test , $0.desc)
-            XCTAssertEqual(cmyk.key.test    , color.key.test    , $0.desc)
-        }
-        testableCollection.forEach {
-            let cmyka = $0.color.map(to: CMYK.self)
-            XCTAssertEqual(cmyka.cyan.test   , color.cyan.test   , $0.desc)
-            XCTAssertEqual(cmyka.magenta.test, color.magenta.test, $0.desc)
-            XCTAssertEqual(cmyka.yellow.test , color.yellow.test , $0.desc)
-            XCTAssertEqual(cmyka.key.test    , color.key.test    , $0.desc)
-            XCTAssertEqual(cmyka.alpha.test  , color.alpha.test  , $0.desc)
-        }
+                                key: 0.01960784313725460992,
+                                alpha: .max)
+        XCTAssertEqual(defaultColor.cmyk, color.container)
+        XCTAssertEqual(defaultColor.map(\.cmyk), color)
+        XCTAssertEqual(defaultColor.map(to: CMYK.self), color)
+    }
+    
+    func testCmykToRgb() {
+        let color = Color<CMYK>(cyan: .zero,
+                                magenta: 0.584,
+                                yellow: 0.52,
+                                key: 0.01960784313725460992,
+                                alpha: .max)
+        XCTAssertEqual(color.rgb, defaultColor.container)
+        XCTAssertEqual(color.map(\.rgb), defaultColor)
+        XCTAssertEqual(color.map(to: RGB.self), defaultColor)
     }
     
     func testCoding() {

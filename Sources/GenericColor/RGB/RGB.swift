@@ -10,7 +10,7 @@ extension RGB.Container: Codable {}
 
 public enum RGB: ColorSpace {
     
-    public struct Container: Equatable {
+    public struct Container: Equatable, KeyPathBuildable {
         public var red: ColorComponent
         public var green: ColorComponent
         public var blue: ColorComponent
@@ -21,10 +21,10 @@ public enum RGB: ColorSpace {
 extension RGB.Container {
 
     func hex(uppercase: Bool = false, hashTagPrefix: Bool = false) -> String {
-        hashTagPrefix ? "#" : "" +
-        .init(Int(red.byteValue), radix: 16, uppercase: uppercase) +
-        .init(Int(green.byteValue), radix: 16, uppercase: uppercase) +
-        .init(Int(blue.byteValue), radix: 16, uppercase: uppercase)
+        (hashTagPrefix ? "#" : "")
+            .appending(red.hex(uppercase: uppercase))
+            .appending(green.hex(uppercase: uppercase))
+            .appending(blue.hex(uppercase: uppercase))
     }
     
     public func with(red value: ColorComponent) -> Self {

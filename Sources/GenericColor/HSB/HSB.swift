@@ -10,7 +10,7 @@ extension HSB.Container: Codable {}
 
 public enum HSB: ColorSpace {
     
-    public struct Container: Equatable {
+    public struct Container: Equatable, KeyPathBuildable {
         public var hue: ColorComponent
         public var saturation: ColorComponent
         public var brightness: ColorComponent

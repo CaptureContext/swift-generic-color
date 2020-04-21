@@ -6,6 +6,8 @@
 //  Copyright © 2019 MakeupStudio. All rights reserved.
 //
 
+import Foundation
+
 extension RGB.Container: InitializableByRGBContainer, RGBProvider {
     
     public init(from container: Self) {
@@ -27,7 +29,7 @@ extension RGB.Container: InitializableByHSBContainer, HSBProvider {
     ///
     /// https://www.rapidtables.com/convert/color/rgb-to-hsv.html
     public var hsb: HSB.Container {
-        let rgb = (red: red.value, green: green.value, blue: blue.value)
+        let rgb = (red: red.doubleValue, green: green.doubleValue, blue: blue.doubleValue)
         var (hue, saturation, brightness) = (0.0, 0.0, 0.0)
         
         let maxV = max(rgb.red, rgb.green, rgb.blue)
@@ -57,7 +59,10 @@ extension RGB.Container: InitializableByCMYKContainer, CMYKProvider {
     /// Returns cmyk container, equivalent to the current rgb one.
     ///
     /// https://www.ginifab.com/feeds/pms/cmyk_to_rgb.php
-    public var cmyk: CMYK.Container { cmyk(key: .raw(1 - max(red.value, green.value, blue.value))) }
+    public var cmyk: CMYK.Container {
+        let maximal =  max(red.doubleValue, green.doubleValue, blue.doubleValue)
+        return cmyk(key: .raw(1 - maximal))
+    }
     
     /// Returns cmyk container, equivalent to the current rgb one.
     ///
@@ -65,13 +70,12 @@ extension RGB.Container: InitializableByCMYKContainer, CMYKProvider {
     ///
     /// - Parameter key: Default key value for `.cmyk` is `1 - max(red.value, green.value, blue.value)`.
     public func cmyk(key: ColorComponent) -> CMYK.Container {
-        let rgb = (red: red.value, green: green.value, blue: blue.value)
-        let d = 1 - key.value
+        let rgb = (red: red.decimalValue, green: green.decimalValue, blue: blue.decimalValue)
+        let d = 1 - key.decimalValue
         let c = 1 - rgb.red   / d
         let m = 1 - rgb.green / d
         let y = 1 - rgb.blue  / d
         return CMYK.Container(cyan: .raw(c), magenta: .raw(m), yellow: .raw(y), key: key)
     }
-    
     
 }

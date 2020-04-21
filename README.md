@@ -55,6 +55,19 @@ Color.rgb(0xAAAAAA)
 color1.hex()
 color2.hex(uppercased: true)
 color3.hex(hashTagPrefix: true)
+
+// color literals will work too, but accuracy is not guarantied
+let literal: Color<RGB> = #colorLiteral(red: 0.9803921568627451, green: 0.40784313725490196, blue: 0.47058823529411764, alpha: 1)
+/*
+That literal is not equal to
+Color<RGB>(
+    red: .byte(250),
+    green: .byte(104),
+    blue: .byte(120),
+    alpha: .byte(255)
+)
+as should be expected.
+*/
 ```
 
 #### ColorSpaces

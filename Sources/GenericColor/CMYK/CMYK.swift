@@ -10,7 +10,7 @@ extension CMYK.Container: Codable {}
 
 public enum CMYK: ColorSpace {
     
-    public struct Container: Equatable {
+    public struct Container: Equatable, KeyPathBuildable {
         public var cyan: ColorComponent
         public var magenta: ColorComponent
         public var yellow: ColorComponent

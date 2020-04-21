@@ -26,11 +26,10 @@ extension CMYK.Container: InitializableByRGBContainer, RGBProvider {
     ///
     /// https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
     public var rgb: RGB.Container {
-        let cmyk = (cyan: cyan.value, magenta: magenta.value, yellow: yellow.value, key: key.value)
-        let r = (1 - cmyk.cyan) * (1 - cmyk.key)
-        let g = (1 - cmyk.magenta) * (1 - cmyk.key)
-        let b = (1 - cmyk.yellow) * (1 - cmyk.key)
-        return RGB.Container(red: .raw(r), green: .raw(g), blue: .raw(b))
+        let r = (.max - cyan) * (.max - cmyk.key)
+        let g = (.max - cmyk.magenta) * (.max - cmyk.key)
+        let b = (.max - cmyk.yellow) * (.max - cmyk.key)
+        return RGB.Container(red: r, green: g, blue: b)
     }
     
 }
