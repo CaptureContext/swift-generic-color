@@ -14,43 +14,161 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     private static let _max: Decimal = 1
     private static let _min: Decimal = 0
     private var _value: Decimal
-    private var _decimal: NSDecimalNumber { _value.nsDecimal }
     
     public static var max: Self { .init(value: _max) }
     public static var min: Self { .init(value: _min) }
     
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs._value.rounded(9, .plain) == rhs._value.rounded(9, .plain)
+    public static func ==(lhs: Self, rhs: Self) -> Bool { lhs.value == rhs.value }
+    
+    // MARK: - Values
+    
+    /// Value that matters
+    ///
+    /// Rounded to 9 decimal places for get, but set is exact
+    public var value: Decimal {
+        get { _value.rounded(9, .plain) }
+        set { _value = newValue }
     }
     
+    /// An alias for `exactValue`
     public var decimalValue: Decimal {
-        get { _value }
-        set { self = .init(value: newValue) }
+        get { exactValue }
+        set { exactValue = newValue }
     }
     
+    /// An alias for `exactByteValue`
     public var decimalByteValue: Decimal {
-        get { _value * 255 }
-        set { self = .byte(newValue) }
+        get { exactByteValue }
+        set { exactByteValue = newValue }
     }
     
-    public var doubleValue: Double {
-        get { _decimal.doubleValue }
+    /// Use this value for exact calculations
+    ///
+    /// Raw value of the ColorComponent
+    public var exactValue: Decimal {
+        get { _value }
         set { self = .raw(newValue) }
     }
     
-    public var byteValue: Int {
-        get { decimalByteValue.rounded(0, .plain).nsDecimal.intValue }
+    /// Use this value for exact calculations
+    ///
+    /// Raw value of the ColorComponent, but
+    /// - Multiplied by 255 on get
+    /// - Divided by 255 on set
+    /// - value(0...1) == byte(0...255)
+    public var exactByteValue: Decimal {
+        get { exactValue * 255 }
         set { self = .byte(newValue) }
+    }
+    
+    /// Use this value for exact calculations
+    ///
+    /// Raw value of the ColorComponent, but
+    /// - Multiplied by 360 on get
+    /// - Divided by 360 on set
+    /// - value(0...1) == byte(0...360)
+    public var exactDegValue: Decimal {
+        get { exactValue * 360 }
+        set { self = .deg(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    public var doubleValue: Double {
+        get { exactValue.nsDecimal.doubleValue }
+        set { self = .raw(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    ///
+    /// - Multiplied by 255 on get
+    /// - Divided by 255 on set
+    /// - value(0...1) == byte(0...255)
+    public var doubleByteValue: Double {
+        get { exactByteValue.nsDecimal.doubleValue }
+        set { self = .byte(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    ///
+    /// - Multiplied by 360 on get
+    /// - Divided by 360 on set
+    /// - value(0...1) == byte(0...360)
+    public var doubleDegValue: Double {
+        get { exactDegValue.nsDecimal.doubleValue }
+        set { self = .deg(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    public var floatValue: Float {
+        get { exactValue.nsDecimal.floatValue }
+        set { self = .raw(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    ///
+    /// - Multiplied by 255 on get
+    /// - Divided by 255 on set
+    /// - value(0...1) == byte(0...255)
+    public var floatByteValue: Float {
+        get { exactByteValue.nsDecimal.floatValue }
+        set { self = .byte(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    ///
+    /// - Multiplied by 360 on get
+    /// - Divided by 360 on set
+    /// - value(0...1) == byte(0...360)
+    public var floatDegValue: Float {
+        get { exactDegValue.nsDecimal.floatValue }
+        set { self = .deg(newValue) }
+    }
+    
+    /// Convenience double value getter
+    ///
+    /// Should not be used for exact calculations,
+    /// consider using exactValue for those
+    ///
+    /// - Multiplied by 255 on get
+    /// - Divided by 255 on set
+    /// - value(0...1) == byte(0...255)
+    public var byteValue: Int {
+        get { exactByteValue.rounded(0, .plain).nsDecimal.intValue }
+        set { self = .byte(newValue) }
+    }
+    
+    /// Value in degrees
+    ///
+    /// value(0...1) == deg(0...360)
+    public var degValue: Int {
+        get { exactDegValue.rounded(0, .plain).nsDecimal.intValue }
+        set { self = .deg(newValue) }
     }
     
     public func hex(uppercase: Bool = false) -> String {
         let value = String(byteValue, radix: 16, uppercase: uppercase)
-        return value.count == 1
-            ? "0".appending(value)
-            : value
+        return value.count == 1 ? "0".appending(value) : value
     }
     
-    // MARK: Init
+    // MARK: - Init
     /// Constructs a new color component
     ///
     /// - Parameter value: The raw value of the color component.
@@ -78,21 +196,58 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     // MARK: Byte
     
     /// Computes the value from byte representation
+    ///
+    /// value(0...1) == byte(0...255)
     public static func byte(_ value: Float) -> Self { .byte(Double(value)) }
     
     /// Computes the value from byte representation
+    ///
+    /// value(0...1) == byte(0...255)
     public static func byte(_ value: Double) -> Self { .byte(Decimal(value)) }
     
     /// Computes the value from byte representation
+    ///
+    /// value(0...1) == byte(0...255)
     public static func byte(_ value: Int) -> Self { .byte(Decimal(value)) }
     
     /// Computes the value from byte representation
+    ///
+    /// value(0...1) == byte(0...255)
     public static func byte(_ value: UInt8) -> Self { .byte(Decimal(value)) }
     
     /// Computes the value from byte representation
+    ///
+    /// value(0...1) == byte(0...255)
     public static func byte(_ value: Decimal) -> Self { .init(value: value / 255) }
     
-    // MARK: Functions
+    // MARK: Deg
+    
+    /// Computes the value from deg representation
+    ///
+    /// value(0...1) == deg(0...360)
+    public static func deg(_ value: Float) -> Self { .deg(Double(value)) }
+    
+    /// Computes the value from deg representation
+    ///
+    /// value(0...1) == deg(0...360)
+    public static func deg(_ value: Double) -> Self { .deg(Decimal(value)) }
+    
+    /// Computes the value from deg representation
+    ///
+    /// value(0...1) == deg(0...360)
+    public static func deg(_ value: Int) -> Self { .deg(Decimal(value)) }
+    
+    /// Computes the value from deg representation
+    ///
+    /// value(0...1) == deg(0...360)
+    public static func deg(_ value: UInt8) -> Self { .deg(Decimal(value)) }
+    
+    /// Computes the value from deg representation
+    ///
+    /// value(0...1) == deg(0...360)
+    public static func deg(_ value: Decimal) -> Self { .init(value: value / 360) }
+    
+    // MARK: - Functions
     
 //    public static func ==(lhs: Self, rhs: Self) -> Bool {
 //        lhs._value == rhs._value

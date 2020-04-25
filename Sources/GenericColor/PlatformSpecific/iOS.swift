@@ -18,10 +18,24 @@ extension ColorComponent {
 
 extension UIColor {
     
-    public var generic: Color<RGB> {
+    /// An alias for `genericRGB`
+    public var generic: Color<RGB> { genericRGB }
+    
+    public var genericRGB: Color<RGB> {
         var (red, green, blue, alpha): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 1)
         self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return .init(red: .raw(red), green: .raw(green), blue: .raw(blue), alpha: .raw(alpha))
+    }
+    
+    public var genericHSB: Color<HSB> {
+        var (hue, saturation, brightness, alpha): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 1)
+        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        return .init(
+            hue: .raw(hue),
+            saturation: .raw(saturation),
+            brightness: .raw(brightness),
+            alpha: .raw(alpha)
+        )
     }
     
     public convenience init<Space>(_ genericColor: Color<Space>)
@@ -31,6 +45,17 @@ extension UIColor {
                   green: CGFloat(color.green.doubleValue),
                   blue: CGFloat(color.blue.doubleValue),
                   alpha: CGFloat(color.alpha.doubleValue))
+    }
+    
+    public convenience init<Space>(_ genericColor: Color<Space>)
+    where Space.Container: HSBProvider {
+        let color: Color<HSB> = genericColor.map(\.hsb)
+        self.init(
+            hue: CGFloat(color.hue.doubleValue),
+            saturation: CGFloat(color.saturation.doubleValue),
+            brightness: CGFloat(color.brightness.doubleValue),
+            alpha: CGFloat(color.alpha.doubleValue)
+        )
     }
     
 }

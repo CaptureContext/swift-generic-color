@@ -17,6 +17,11 @@ extension SwiftUI.Color {
         self.init(.init(genericColor))
     }
     
+    public init<Space>(_ genericColor: Color<Space>)
+    where Space.Container: HSBProvider {
+        self.init(.init(genericColor))
+    }
+    
 }
 
 extension Color where Space.Container: RGBProvider {

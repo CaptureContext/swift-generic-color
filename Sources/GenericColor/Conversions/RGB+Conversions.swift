@@ -29,8 +29,8 @@ extension RGB.Container: InitializableByHSBContainer, HSBProvider {
     ///
     /// https://www.rapidtables.com/convert/color/rgb-to-hsv.html
     public var hsb: HSB.Container {
-        let rgb = (red: red.doubleValue, green: green.doubleValue, blue: blue.doubleValue)
-        var (hue, saturation, brightness) = (0.0, 0.0, 0.0)
+        let rgb = (red: red.exactValue, green: green.exactValue, blue: blue.exactValue)
+        var (hue, saturation, brightness) = (Decimal(0.0), Decimal(0.0), Decimal(0.0))
         
         let maxV = max(rgb.red, rgb.green, rgb.blue)
         let minV = min(rgb.red, rgb.green, rgb.blue)
@@ -60,7 +60,7 @@ extension RGB.Container: InitializableByCMYKContainer, CMYKProvider {
     ///
     /// https://www.ginifab.com/feeds/pms/cmyk_to_rgb.php
     public var cmyk: CMYK.Container {
-        let maximal =  max(red.doubleValue, green.doubleValue, blue.doubleValue)
+        let maximal =  max(red.exactValue, green.exactValue, blue.exactValue)
         return cmyk(key: .raw(1 - maximal))
     }
     
@@ -70,8 +70,8 @@ extension RGB.Container: InitializableByCMYKContainer, CMYKProvider {
     ///
     /// - Parameter key: Default key value for `.cmyk` is `1 - max(red.value, green.value, blue.value)`.
     public func cmyk(key: ColorComponent) -> CMYK.Container {
-        let rgb = (red: red.decimalValue, green: green.decimalValue, blue: blue.decimalValue)
-        let d = 1 - key.decimalValue
+        let rgb = (red: red.exactValue, green: green.exactValue, blue: blue.exactValue)
+        let d = 1 - key.exactValue
         let c = 1 - rgb.red   / d
         let m = 1 - rgb.green / d
         let y = 1 - rgb.blue  / d

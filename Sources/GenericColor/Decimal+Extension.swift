@@ -8,6 +8,11 @@
 import Foundation
 
 extension Decimal {
+    
+    var nsDecimal: NSDecimalNumber { .init(decimal: self) }
+    
+    func rounded(_ roundingMode: NSDecimalNumber.RoundingMode) -> Decimal { rounded(0, roundingMode) }
+    
     func rounded(_ scale: Int, _ roundingMode: NSDecimalNumber.RoundingMode) -> Decimal {
         var result = Decimal()
         var localCopy = self
@@ -15,5 +20,8 @@ extension Decimal {
         return result
     }
     
-    var nsDecimal: NSDecimalNumber { .init(decimal: self) }
+    func truncatingRemainder(dividingBy value: Decimal) -> Decimal {
+        self - value * (self / value).rounded(.down)
+    }
+    
 }

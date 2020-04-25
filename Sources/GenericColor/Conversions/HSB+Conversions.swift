@@ -6,6 +6,8 @@
 //  Copyright © 2019 MakeupStudio. All rights reserved.
 //
 
+import Foundation
+
 extension HSB.Container: InitializableByHSBContainer, HSBProvider {
     
     public init(from container: Self) {
@@ -27,15 +29,17 @@ extension HSB.Container: InitializableByRGBContainer, RGBProvider {
     /// https://en.wikipedia.org/wiki/HSL_and_HSV
     public var rgb: RGB.Container {
         let hsb = (
-            hue: hue.doubleValue,
-            saturation: saturation.doubleValue,
-            brightness: brightness.doubleValue
+            hue: hue.exactValue,
+            saturation: saturation.exactValue,
+            brightness: brightness.exactValue
         )
+        
         let c = hsb.brightness * hsb.saturation
         let x = c * (1 - abs((hsb.hue * 6).truncatingRemainder(dividingBy: 2) - 1))
         let m = hsb.brightness - c
         
-        func value(_ v: Double) -> ColorComponent { .raw(v + m) }
+        func value(_ v: Decimal) -> ColorComponent { .raw(v + m) }
+        
         switch hsb.hue * 6 {
         case 0..<1, 6 : return .init(red: value(c), green: value(x), blue: value(0))
         case 1..<2    : return .init(red: value(x), green: value(c), blue: value(0))

@@ -18,11 +18,25 @@ extension ColorComponent {
 
 extension NSColor {
     
-    public var generic: Color<RGB> {
-        .init(red: .raw(redComponent),
-              green: .raw(greenComponent),
-              blue: .raw(blueComponent),
-              alpha: .raw(alphaComponent))
+    /// An alias for `genericRGB`
+    public var generic: Color<RGB> { genericRGB }
+    
+    public var genericRGB: Color<RGB> {
+        .init(
+            red: .raw(redComponent),
+            green: .raw(greenComponent),
+            blue: .raw(blueComponent),
+            alpha: .raw(alphaComponent)
+        )
+    }
+    
+    public var genericHSB: Color<HSB> {
+        .init(
+            hue: .raw(hueComponent),
+            saturation: .raw(saturationComponent),
+            brightness: .raw(brightnessComponent),
+            alpha: .raw(alphaComponent)
+        )
     }
     
     public convenience init<Space>(_ genericColor: Color<Space>)
@@ -32,6 +46,17 @@ extension NSColor {
                   green: CGFloat(color.green.doubleValue),
                   blue: CGFloat(color.blue.doubleValue),
                   alpha: CGFloat(color.alpha.doubleValue))
+    }
+    
+    public convenience init<Space>(_ genericColor: Color<Space>)
+    where Space.Container: HSBProvider {
+        let color: Color<HSB> = genericColor.map(\.hsb)
+        self.init(
+            hue: CGFloat(color.hue.doubleValue),
+            saturation: CGFloat(color.saturation.doubleValue),
+            brightness: CGFloat(color.brightness.doubleValue),
+            alpha: CGFloat(color.alpha.doubleValue)
+        )
     }
     
 }
