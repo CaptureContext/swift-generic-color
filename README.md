@@ -1,4 +1,6 @@
-# GenericColor
+<p align="center">
+  <img src="Assets/GenericColor-Logo-Pink.png" width=100%/>
+</p>
 
 <p>
   <a href="https://www.bitrise.io">
