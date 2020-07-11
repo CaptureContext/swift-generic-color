@@ -1,5 +1,4 @@
-// swift-tools-version:5.1
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.3
 
 import PackageDescription
 
@@ -8,15 +7,17 @@ let package = Package(
     products: [
         .library(
             name: "GenericColor",
-            targets: ["GenericColor"]),
+            targets: ["GenericColor"]
+        ),
     ],
     dependencies: [],
     targets: [
-        .target(
-            name: "GenericColor",
-            dependencies: []),
+        .target(name: "GenericColor"),
         .testTarget(
             name: "GenericColorTests",
-            dependencies: ["GenericColor"]),
+            dependencies: [
+                .target(name: "GenericColor")
+            ]
+        ),
     ]
 )
