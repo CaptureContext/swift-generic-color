@@ -59,21 +59,33 @@ extension Color where Space.Container: RGBProvider {
 
 extension Color: RGBAInitializable where Space == RGB {
     
-    public init(red: ColorComponent = .max,
-                green: ColorComponent = .max,
-                blue: ColorComponent = .max,
-                alpha: ColorComponent = .max) {
+    public init(
+        red: ColorComponent,
+        green: ColorComponent,
+        blue: ColorComponent,
+        alpha: ColorComponent = .max
+    ) {
         self.init(RGB.Container(red: red, green: green, blue: blue), alpha: alpha)
+    }
+    
+    @inlinable
+    public init(
+        white: ColorComponent = .max,
+        alpha: ColorComponent = .max
+    ) {
+        self.init(red: white, green: white, blue: white, alpha: alpha)
     }
     
 }
 
 extension Color where Space == HSB {
     
-    public init(hue: ColorComponent = .max,
-                saturation: ColorComponent = .max,
-                brightness: ColorComponent = .max,
-                alpha: ColorComponent = .max) {
+    public init(
+        hue: ColorComponent = .max,
+        saturation: ColorComponent = .max,
+        brightness: ColorComponent = .max,
+        alpha: ColorComponent = .max
+    ) {
         self.init(HSB.Container(hue: hue, saturation: saturation, brightness: brightness), alpha: alpha)
     }
     
@@ -81,11 +93,13 @@ extension Color where Space == HSB {
 
 extension Color where Space == CMYK {
     
-    public init(cyan: ColorComponent = .min,
-                magenta: ColorComponent = .min,
-                yellow: ColorComponent = .min,
-                key: ColorComponent = .min,
-                alpha: ColorComponent = .max) {
+    public init(
+        cyan: ColorComponent = .min,
+        magenta: ColorComponent = .min,
+        yellow: ColorComponent = .min,
+        key: ColorComponent = .min,
+        alpha: ColorComponent = .max
+    ) {
         self.init(CMYK.Container(cyan: cyan, magenta: magenta, yellow: yellow, key: key), alpha: alpha)
     }
     

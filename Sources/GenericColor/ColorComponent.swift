@@ -18,6 +18,7 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     public static var max: Self { .init(value: _max) }
     public static var min: Self { .init(value: _min) }
     
+    @inlinable
     public static func ==(lhs: Self, rhs: Self) -> Bool { lhs.value == rhs.value }
     
     // MARK: - Values
@@ -31,12 +32,14 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     }
     
     /// An alias for `exactValue`
+    @inlinable
     public var decimalValue: Decimal {
         get { exactValue }
         set { exactValue = newValue }
     }
     
     /// An alias for `exactByteValue`
+    @inlinable
     public var decimalByteValue: Decimal {
         get { exactByteValue }
         set { exactByteValue = newValue }
@@ -56,6 +59,7 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     /// - Multiplied by 255 on get
     /// - Divided by 255 on set
     /// - value(0...1) == byte(0...255)
+    @inlinable
     public var exactByteValue: Decimal {
         get { exactValue * 255 }
         set { self = .byte(newValue) }
@@ -67,6 +71,7 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     /// - Multiplied by 360 on get
     /// - Divided by 360 on set
     /// - value(0...1) == byte(0...360)
+    @inlinable
     public var exactDegValue: Decimal {
         get { exactValue * 360 }
         set { self = .deg(newValue) }
@@ -183,14 +188,19 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     
     // MARK: Raw
     
+    @inlinable
     public static func raw(_ value: Float) -> Self { .raw(Double(value)) }
     
+    @inlinable
     public static func raw(_ value: Double) -> Self { .raw(Decimal(value)) }
     
+    @inlinable
     public static func raw(_ value: Int) -> Self { .raw(Decimal(value)) }
     
+    @inlinable
     public static func raw(_ value: UInt8) -> Self { .raw(Decimal(value)) }
     
+    @inlinable
     public static func raw(_ value: Decimal) -> Self { .init(value: value) }
     
     // MARK: Byte
@@ -198,26 +208,31 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     /// Computes the value from byte representation
     ///
     /// value(0...1) == byte(0...255)
+    @inlinable
     public static func byte(_ value: Float) -> Self { .byte(Double(value)) }
     
     /// Computes the value from byte representation
     ///
     /// value(0...1) == byte(0...255)
+    @inlinable
     public static func byte(_ value: Double) -> Self { .byte(Decimal(value)) }
     
     /// Computes the value from byte representation
     ///
     /// value(0...1) == byte(0...255)
+    @inlinable
     public static func byte(_ value: Int) -> Self { .byte(Decimal(value)) }
     
     /// Computes the value from byte representation
     ///
     /// value(0...1) == byte(0...255)
+    @inlinable
     public static func byte(_ value: UInt8) -> Self { .byte(Decimal(value)) }
     
     /// Computes the value from byte representation
     ///
     /// value(0...1) == byte(0...255)
+    @inlinable
     public static func byte(_ value: Decimal) -> Self { .init(value: value / 255) }
     
     // MARK: Deg
@@ -225,26 +240,31 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
     /// Computes the value from deg representation
     ///
     /// value(0...1) == deg(0...360)
+    @inlinable
     public static func deg(_ value: Float) -> Self { .deg(Double(value)) }
     
     /// Computes the value from deg representation
     ///
     /// value(0...1) == deg(0...360)
+    @inlinable
     public static func deg(_ value: Double) -> Self { .deg(Decimal(value)) }
     
     /// Computes the value from deg representation
     ///
     /// value(0...1) == deg(0...360)
+    @inlinable
     public static func deg(_ value: Int) -> Self { .deg(Decimal(value)) }
     
     /// Computes the value from deg representation
     ///
     /// value(0...1) == deg(0...360)
+    @inlinable
     public static func deg(_ value: UInt8) -> Self { .deg(Decimal(value)) }
     
     /// Computes the value from deg representation
     ///
     /// value(0...1) == deg(0...360)
+    @inlinable
     public static func deg(_ value: Decimal) -> Self { .init(value: value / 360) }
     
     // MARK: - Functions
@@ -277,18 +297,26 @@ public struct ColorComponent: Equatable, Comparable, Codable, AdditiveArithmetic
         lhs._value < rhs._value
     }
     
+    @inlinable
     public static func +=(lhs: inout ColorComponent, rhs: ColorComponent) {
         lhs = lhs + rhs
     }
     
+    @inlinable
     public static func -=(lhs: inout ColorComponent, rhs: ColorComponent) {
         lhs = lhs - rhs
     }
     
 }
 
-extension ColorComponent: ExpressibleByFloatLiteral {
+extension ColorComponent: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
     
+    @inlinable
+    public init(integerLiteral value: Double) {
+        self.init(floatLiteral: value)
+    }
+    
+    @inlinable
     public init(floatLiteral value: Double) {
         self = .raw(value)
     }

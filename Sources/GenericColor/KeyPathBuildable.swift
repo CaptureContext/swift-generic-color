@@ -8,10 +8,12 @@
 public protocol KeyPathBuildable {}
 
 extension KeyPathBuildable {
+    @inlinable
     public func with<T>(_ keyPath: WritableKeyPath<Self, T>, _ value: T) -> Self {
         self.with(keyPath == value)
     }
     
+    @inlinable
     public func with(_ transform: (Self) -> Self) -> Self {
         transform(self)
     }

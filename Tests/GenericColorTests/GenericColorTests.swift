@@ -1,6 +1,20 @@
 import XCTest
 @testable import GenericColor
 
+enum OSVersion {
+    case iOS, macOS, unknown
+}
+
+#if os(macOS)
+import AppKit
+let osVersion = OSVersion.macOS
+#elseif os(iOS)
+import UIKit
+let osVersion = OSVersion.iOS
+#else
+let osVersion = OSVersion.unknown
+#endif
+
 final class GenericColorsTests: XCTestCase {
     
     // test default init
@@ -53,13 +67,16 @@ final class GenericColorsTests: XCTestCase {
         
         XCTAssertEqual(Color(hex: "#abc"), Color(hex: "ABC"))
         XCTAssertEqual(Color(hex: "#abc"), Color(rgba: 0xAABBCCFF))
+        
+        // 2 will be rounded to `.max` value
+        XCTAssertEqual(Color<RGB>(white: 2), Color(red: .max, green: .max, blue: .max))
     }
 
     func testRgbToHsb() {
         let color = Color<HSB>(hue: 0.9817351598173516,
                                saturation: 0.584,
                                brightness: 0.9803921568627453952,
-                               alpha: 1.0)
+                               alpha: 1)
         XCTAssertEqual(defaultColor.hsb, color.container)
         XCTAssertEqual(defaultColor.map(\.hsb), color)
         XCTAssertEqual(defaultColor.map(to: HSB.self), color)
@@ -115,6 +132,24 @@ final class GenericColorsTests: XCTestCase {
         XCTAssertEqual(color2.hex(uppercase: false, hashTagPrefix: false), "00000000")
         XCTAssertEqual(color3.hex(uppercase: false, hashTagPrefix: true), "#ffffffff")
         XCTAssertEqual(color4.hex(), "ffffffaa")
+    }
+    
+    /// Should not couse initializer ambiguity
+    func testMacOSColorInit() throws {
+        try XCTSkipUnless(osVersion == .macOS, "MacOS only test")
+        #if os(macOS)
+        let genericColor = Color<RGB>()
+        _ = NSColor(genericColor)
+        #endif
+    }
+    
+    /// Should not couse initializer ambiguity
+    func testIOSColorInit() throws {
+        try XCTSkipUnless(osVersion == .iOS, "iOS only test")
+        #if os(iOS)
+        let genericColor = Color<RGB>()
+        _ = UIColor(genericColor)
+        #endif
     }
     
     static var allTests = [
