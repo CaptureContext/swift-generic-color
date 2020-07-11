@@ -40,10 +40,12 @@ extension RGBAInitializable {
     /// - Parameter value: Hex color pattern.
     public init?(hex: String) {
         guard let rgba = hex.scanHexRgba() else { return nil }
-        self.init(red: .byte(rgba.red),
-                  green: .byte(rgba.green),
-                  blue: .byte(rgba.blue),
-                  alpha: .byte(rgba.alpha))
+        self.init(
+            red: .byte(rgba.red),
+            green: .byte(rgba.green),
+            blue: .byte(rgba.blue),
+            alpha: .byte(rgba.alpha)
+        )
     }
     
     /// Initializes a new instance from Hex
@@ -63,10 +65,12 @@ extension RGBAInitializable {
     /// - Parameter value: Hex color pattern.
     public init?(rgba value: UInt32) {
         guard (0...0xffffffff).contains(value) else { return nil }
-        self.init(red   : .byte(Double((value & 0xff000000) >> 24)),
-                  green : .byte(Double((value & 0x00ff0000) >> 16)),
-                  blue  : .byte(Double((value & 0x0000ff00) >> 8)),
-                  alpha : .byte(Double(value & 0x000000ff)))
+        self.init(
+            red   : .byte(Double((value & 0xff000000) >> 24)),
+            green : .byte(Double((value & 0x00ff0000) >> 16)),
+            blue  : .byte(Double((value & 0x0000ff00) >> 8)),
+            alpha : .byte(Double(value & 0x000000ff))
+        )
     }
     
     /// Initializes a new instance from Hex

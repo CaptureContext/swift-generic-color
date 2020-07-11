@@ -42,10 +42,12 @@ extension NSColor {
     public convenience init<Space>(_ genericColor: Color<Space>)
     where Space.Container: RGBProvider {
         let color: Color<RGB> = genericColor.map(\.rgb)
-        self.init(red: CGFloat(color.red.doubleValue),
-                  green: CGFloat(color.green.doubleValue),
-                  blue: CGFloat(color.blue.doubleValue),
-                  alpha: CGFloat(color.alpha.doubleValue))
+        self.init(
+            red: CGFloat(color.red.doubleValue),
+            green: CGFloat(color.green.doubleValue),
+            blue: CGFloat(color.blue.doubleValue),
+            alpha: CGFloat(color.alpha.doubleValue)
+        )
     }
     
 // TODO: Refactor (That piece of code causes ambiguity)
