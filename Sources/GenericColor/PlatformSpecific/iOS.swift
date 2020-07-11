@@ -41,22 +41,25 @@ extension UIColor {
     public convenience init<Space>(_ genericColor: Color<Space>)
     where Space.Container: RGBProvider {
         let color: Color<RGB> = genericColor.map(\.rgb)
-        self.init(red: CGFloat(color.red.doubleValue),
-                  green: CGFloat(color.green.doubleValue),
-                  blue: CGFloat(color.blue.doubleValue),
-                  alpha: CGFloat(color.alpha.doubleValue))
-    }
-    
-    public convenience init<Space>(_ genericColor: Color<Space>)
-    where Space.Container: HSBProvider {
-        let color: Color<HSB> = genericColor.map(\.hsb)
         self.init(
-            hue: CGFloat(color.hue.doubleValue),
-            saturation: CGFloat(color.saturation.doubleValue),
-            brightness: CGFloat(color.brightness.doubleValue),
+            red: CGFloat(color.red.doubleValue),
+            green: CGFloat(color.green.doubleValue),
+            blue: CGFloat(color.blue.doubleValue),
             alpha: CGFloat(color.alpha.doubleValue)
         )
     }
+    
+// TODO: Refactor (That piece of code causes ambiguity)
+//    public convenience init<Space>(_ genericColor: Color<Space>)
+//    where Space.Container: HSBProvider {
+//        let color: Color<HSB> = genericColor.map(\.hsb)
+//        self.init(
+//            hue: CGFloat(color.hue.doubleValue),
+//            saturation: CGFloat(color.saturation.doubleValue),
+//            brightness: CGFloat(color.brightness.doubleValue),
+//            alpha: CGFloat(color.alpha.doubleValue)
+//        )
+//    }
     
 }
 

@@ -48,16 +48,17 @@ extension NSColor {
                   alpha: CGFloat(color.alpha.doubleValue))
     }
     
-    public convenience init<Space>(_ genericColor: Color<Space>)
-    where Space.Container: HSBProvider {
-        let color: Color<HSB> = genericColor.map(\.hsb)
-        self.init(
-            hue: CGFloat(color.hue.doubleValue),
-            saturation: CGFloat(color.saturation.doubleValue),
-            brightness: CGFloat(color.brightness.doubleValue),
-            alpha: CGFloat(color.alpha.doubleValue)
-        )
-    }
+// TODO: Refactor (That piece of code causes ambiguity)
+//    public convenience init<Space>(_ genericColor: Color<Space>)
+//    where Space.Container: HSBProvider {
+//        let color: Color<HSB> = genericColor.map(\.hsb)
+//        self.init(
+//            hue: CGFloat(color.hue.doubleValue),
+//            saturation: CGFloat(color.saturation.doubleValue),
+//            brightness: CGFloat(color.brightness.doubleValue),
+//            alpha: CGFloat(color.alpha.doubleValue)
+//        )
+//    }
     
 }
 

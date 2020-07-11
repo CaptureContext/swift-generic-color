@@ -17,10 +17,11 @@ extension SwiftUI.Color {
         self.init(.init(genericColor))
     }
     
-    public init<Space>(_ genericColor: Color<Space>)
-    where Space.Container: HSBProvider {
-        self.init(.init(genericColor))
-    }
+// TODO: Refactor (That piece of code causes ambiguity)
+//    public init<Space>(_ genericColor: Color<Space>)
+//    where Space.Container: HSBProvider {
+//        self.init(.init(genericColor))
+//    }
     
 }
 
