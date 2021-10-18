@@ -3,21 +3,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "GenericColor",
-    products: [
-        .library(
-            name: "GenericColor",
-            targets: ["GenericColor"]
-        ),
-    ],
-    dependencies: [],
-    targets: [
-        .target(name: "GenericColor"),
-        .testTarget(
-            name: "GenericColorTests",
-            dependencies: [
-                .target(name: "GenericColor")
-            ]
-        ),
-    ]
+  name: "swift-generic-color",
+  products: [
+    .library(
+      name: "GenericColor",
+      targets: ["GenericColor"]
+    ),
+  ],
+  targets: [
+    .target(name: "GenericColor"),
+    .testTarget(
+      name: "GenericColorTests",
+      dependencies: [
+        .target(name: "GenericColor")
+      ]
+    ),
+  ]
 )

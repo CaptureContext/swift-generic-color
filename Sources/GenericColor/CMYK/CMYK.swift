@@ -9,32 +9,26 @@
 extension CMYK.Container: Codable {}
 
 public enum CMYK: ColorSpace {
-    
-    public struct Container: Equatable, KeyPathBuildable {
-        public var cyan: ColorComponent
-        public var magenta: ColorComponent
-        public var yellow: ColorComponent
-        public var key: ColorComponent
-    }
-    
+  public struct Container: Equatable {
+    public var cyan: ColorComponent
+    public var magenta: ColorComponent
+    public var yellow: ColorComponent
+    public var key: ColorComponent
+  }
 }
 
 extension CMYK.Container {
-    
-    public func with(cyan value: ColorComponent) -> Self {
-        .init(cyan: cyan, magenta: magenta, yellow: yellow, key: key)
-    }
-    
-    public func with(magenta value: ColorComponent) -> Self {
-        .init(cyan: cyan, magenta: value, yellow: yellow, key: key)
-    }
-    
-    public func with(yellow value: ColorComponent) -> Self {
-        .init(cyan: cyan, magenta: magenta, yellow: value, key: key)
-    }
-    
-    public func with(key value: ColorComponent) -> Self {
-        .init(cyan: cyan, magenta: magenta, yellow: yellow, key: value)
-    }
-    
+  public func with(
+    cyan: ColorComponent? = nil,
+    magenta: ColorComponent? = nil,
+    yellow: ColorComponent? = nil,
+    key: ColorComponent? = nil
+  ) -> Self {
+    .init(
+      cyan: cyan ?? self.cyan,
+      magenta: magenta ?? self.magenta,
+      yellow: yellow ?? self.yellow,
+      key: key ?? self.key
+    )
+  }
 }

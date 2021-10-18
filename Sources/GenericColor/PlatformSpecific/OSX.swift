@@ -10,62 +10,65 @@
 import AppKit
 
 extension ColorComponent {
-    
-    public static func raw(_ value: CGFloat) -> Self { .raw(Double(value)) }
-    public static func byte(_ value: CGFloat) -> Self { .byte(Double(value)) }
-    
+  public static func raw(_ value: CGFloat) -> Self { .raw(Double(value)) }
+  public static func byte(_ value: CGFloat) -> Self { .byte(Double(value)) }
 }
 
 extension NSColor {
-    
-    /// An alias for `genericRGB`
-    public var generic: Color<RGB> { genericRGB }
-    
-    public var genericRGB: Color<RGB> {
-        .init(
-            red: .raw(redComponent),
-            green: .raw(greenComponent),
-            blue: .raw(blueComponent),
-            alpha: .raw(alphaComponent)
-        )
-    }
-    
-    public var genericHSB: Color<HSB> {
-        .init(
-            hue: .raw(hueComponent),
-            saturation: .raw(saturationComponent),
-            brightness: .raw(brightnessComponent),
-            alpha: .raw(alphaComponent)
-        )
-    }
-    
-    public convenience init<Space>(_ genericColor: Color<Space>)
-    where Space.Container: RGBProvider {
-        let color: Color<RGB> = genericColor.map(\.rgb)
-        self.init(
-            red: CGFloat(color.red.doubleValue),
-            green: CGFloat(color.green.doubleValue),
-            blue: CGFloat(color.blue.doubleValue),
-            alpha: CGFloat(color.alpha.doubleValue)
-        )
-    }
-    
-// TODO: Refactor (That piece of code causes ambiguity)
-//    public convenience init<Space>(_ genericColor: Color<Space>)
-//    where Space.Container: HSBProvider {
-//        let color: Color<HSB> = genericColor.map(\.hsb)
-//        self.init(
-//            hue: CGFloat(color.hue.doubleValue),
-//            saturation: CGFloat(color.saturation.doubleValue),
-//            brightness: CGFloat(color.brightness.doubleValue),
-//            alpha: CGFloat(color.alpha.doubleValue)
-//        )
-//    }
-    
+  /// An alias for `genericRGB`
+  public var generic: Color<RGB> { genericRGB }
+  
+  public var genericRGB: Color<RGB> {
+    .init(
+      red: .raw(redComponent),
+      green: .raw(greenComponent),
+      blue: .raw(blueComponent),
+      alpha: .raw(alphaComponent)
+    )
+  }
+  
+  public var genericHSB: Color<HSB> {
+    .init(
+      hue: .raw(hueComponent),
+      saturation: .raw(saturationComponent),
+      brightness: .raw(brightnessComponent),
+      alpha: .raw(alphaComponent)
+    )
+  }
+  
+  public convenience init<Space>(_ genericColor: Color<Space>)
+  where Space.Container: RGBProvider {
+    let color: Color<RGB> = genericColor.map(\.rgb)
+    self.init(
+      red: CGFloat(color.red.doubleValue),
+      green: CGFloat(color.green.doubleValue),
+      blue: CGFloat(color.blue.doubleValue),
+      alpha: CGFloat(color.alpha.doubleValue)
+    )
+  }
+  
+  // TODO: Refactor (That piece of code causes ambiguity)
+  //    public convenience init<Space>(_ genericColor: Color<Space>)
+  //    where Space.Container: HSBProvider {
+  //        let color: Color<HSB> = genericColor.map(\.hsb)
+  //        self.init(
+  //            hue: CGFloat(color.hue.doubleValue),
+  //            saturation: CGFloat(color.saturation.doubleValue),
+  //            brightness: CGFloat(color.brightness.doubleValue),
+  //            alpha: CGFloat(color.alpha.doubleValue)
+  //        )
+  //    }
+}
+
+extension NSColor {
+  public convenience init?(hex: String) {
+    guard let color = Color<RGB>(hex: hex) else { return nil }
+    self.init(color)
+  }
 }
 
 extension Color where Space.Container: RGBProvider {
-    public var cocoaColor: NSColor { .init(self) }
+  public var cocoaColor: NSColor { .init(self) }
 }
 
 #endif

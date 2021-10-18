@@ -6,28 +6,42 @@
 //
 
 extension Color {
-    public func map<T: ColorSpace>(_ keyPath: KeyPath<Space.Container, T.Container>) -> Color<T> {
-        .init(container[keyPath: keyPath], alpha: alpha)
-    }
+  public func map<T: ColorSpace>(
+    _ transform: (Space.Container) -> T.Container
+  ) -> Color<T> {
+    .init(transform(container), alpha: alpha)
+  }
+  
+  public func flatMap<T: ColorSpace>(
+    _ transform: (Color) -> Color<T>
+  ) -> Color<T> {
+    transform(self)
+  }
 }
 
 extension Color where Space == RGB {
-    public func map<T: ColorSpace>(to type: T.Type = T.self) -> Color<T>
-    where T.Container: InitializableByRGBContainer {
-        .init(.init(from: container), alpha: alpha)
-    }
+  public func convert<T: ColorSpace>(
+    to space: T.Type = T.self
+  ) -> Color<T>
+  where T.Container: InitializableByRGBContainer {
+    .init(.init(from: container), alpha: alpha)
+  }
 }
 
 extension Color where Space == HSB {
-    public func map<T: ColorSpace>(to type: T.Type = T.self) -> Color<T>
-    where T.Container: InitializableByHSBContainer {
-        .init(.init(from: container), alpha: alpha)
-    }
+  public func convert<T: ColorSpace>(
+    to space: T.Type = T.self
+  ) -> Color<T>
+  where T.Container: InitializableByHSBContainer {
+    .init(.init(from: container), alpha: alpha)
+  }
 }
 
 extension Color where Space == CMYK {
-    public func map<T: ColorSpace>(to type: T.Type = T.self) -> Color<T>
-    where T.Container: InitializableByCMYKContainer {
-        .init(.init(from: container), alpha: alpha)
-    }
+  public func convert<T: ColorSpace>(
+    to space: T.Type = T.self
+  ) -> Color<T>
+  where T.Container: InitializableByCMYKContainer {
+    .init(.init(from: container), alpha: alpha)
+  }
 }

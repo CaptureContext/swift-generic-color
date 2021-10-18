@@ -2,9 +2,6 @@
   <img src="Assets/GenericColor-Logo-Pink.png" width=100%/>
 </p>
 <p>
-  <a href="https://www.bitrise.io">
-        <img src="https://app.bitrise.io/app/a3a37bed689bd009/status.svg?token=BxXqBRMIFEZT29jbaixGpA&branch=master" alt="Bitrise"/>
-    </a>
     <a href="https://swift.org">
         <img src="https://img.shields.io/badge/Swift-5.3-orange.svg?logo=swift" />
     </a>
@@ -31,15 +28,20 @@ import GenericColor
 ```swift
 // Initialize with byte value via .byte(_) method
 let color1 = Color<RGB>(
-    red: .byte(221),
-    green: .byte(51),
-    blue: .byte(12),
-    alpha: .byte(255)
+  red: .byte(221),
+  green: .byte(51),
+  blue: .byte(12),
+  alpha: .byte(255)
 )
 
 // or directly via numeric literals and .raw(_) method for numerics
 let alpha = 1
-let color2 = Color<RGB>(red: .max, green: 0.2, blue: .byte(12),  alpha: .raw(alpha))
+let color2 = Color<RGB>(
+  red: .max, 
+  green: 0.2, 
+  blue: .byte(12),
+  alpha: .raw(alpha)
+)
 
 print(color1 == color2) // true
 
@@ -71,12 +73,23 @@ let color1 = Color<RGB>()
 let color2 = Color<HSB>()
 let color3 = Color<CMYK>()
 
-print(color1.map(to: HSB.self) == color2)
-print(color1.map(to: CMYK.self) == color3)
-print(color2.map(to: RGB.self) == color1)
+// Implicit convertions
+print(color1.convert() == color2)
+print(color1.convert() == color3)
+print(color2.convert() == color1)
+
+// Explicit convertions
+print(color1.convert(to: HSB.self) == color2)
+print(color1.convert(to: CMYK.self) == color3)
+print(color2.convert(to: RGB.self) == color1)
+
+// Container mappings
 print(color2.map(to: \.cmyk) == color3)
 print(color3.map(to: \.rgb) == color1)
 print(color3.map(to: \.hsb) == color2)
+
+// Color flat mappings
+print(color1.flatMap { $0.with(alpha: 1) })
 ```
 
 ## Installation
@@ -84,13 +97,20 @@ print(color3.map(to: \.hsb) == color2)
 Add the package to Your SwiftPM package dependencies:
 
 ```swift
-.package(url: "https://github.com/MakeupStudio/GenericColor.git", from: "0.4.0-alpha.1.0")
+.package(
+  name: "swift-generic-color",
+  url: "https://github.com/capturecontext/swift-generic-color.git",
+  .upToNextMinor(from: "0.5.0")
+)
 ```
 
 then add `GenericColor` dependency to your target
 
 ```swift
-.product(name: "GenericColor", package: "GenericColor")
+.product(
+  name: "GenericColor",
+  package: "GenericColor"
+)
 ```
 
 
@@ -99,4 +119,4 @@ then add `GenericColor` dependency to your target
 
 See tests for more usage examples.
 
-Check out higher-level framework [Palette](https://github.com/MakeupStudio/Palette) for more.
+Check out higher-level framework [Palette](https://github.com/capturecontext/palette) for more.

@@ -7,5 +7,5 @@
 //
 
 public protocol ColorSpace: StaticallyNamedType {
-    associatedtype Container: Equatable
+  associatedtype Container: Equatable
 }

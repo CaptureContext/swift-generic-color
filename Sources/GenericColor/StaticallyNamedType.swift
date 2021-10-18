@@ -7,21 +7,14 @@
 //
 
 public protocol StaticallyNamedType {
-    
-    static var name: String { get }
-    static var path: String { get }
-    
+  static var name: String { get }
+  static var fullName: String { get }
 }
 
 extension StaticallyNamedType {
-    
-    @inlinable
-    public static var type: Self.Type { Self.self }
-    
-    @inlinable
-    public static var name: String { String(describing: type) }
-    
-    @inlinable
-    public static var path: String { String(reflecting: type) }
-    
+  @inlinable
+  public static var name: String { String(describing: self) }
+  
+  @inlinable
+  public static var fullName: String { String(reflecting: self) }
 }
