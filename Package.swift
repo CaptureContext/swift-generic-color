@@ -4,6 +4,10 @@ import PackageDescription
 
 let package = Package(
   name: "swift-generic-color",
+  platforms: [
+    .iOS(.v13),
+    .macOS(.v10_15)
+  ],
   products: [
     .library(
       name: "GenericColor",
