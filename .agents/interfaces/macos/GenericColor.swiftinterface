@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.25.4 clang-2100.3.25.1)
-// swift-module-flags: -target arm64-apple-macos12.0 -enable-objc-interop -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name GenericColor
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-macosx10.13 -enable-objc-interop -swift-version 5 -O -module-name GenericColor
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
 import AppKit
 import CoreGraphics
 import Foundation
@@ -10,60 +10,60 @@ import SwiftUI
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-extension GenericColor::CMYK.GenericColor::Container : Swift::Codable {
-  public func encode(to encoder: any Swift::Encoder) throws
-  public init(from decoder: any Swift::Decoder) throws
+extension GenericColor.CMYK.Container : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
-public enum CMYK : GenericColor::ColorSpace {
-  public struct Container : Swift::Equatable {
-    public var cyan: GenericColor::ColorComponent
-    public var magenta: GenericColor::ColorComponent
-    public var yellow: GenericColor::ColorComponent
-    public var key: GenericColor::ColorComponent
-    @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_struct_equals(_ a: GenericColor::CMYK.GenericColor::Container, _ b: GenericColor::CMYK.GenericColor::Container) -> Swift::Bool
+public enum CMYK : GenericColor.ColorSpace {
+  public struct Container : Swift.Equatable {
+    public var cyan: GenericColor.ColorComponent
+    public var magenta: GenericColor.ColorComponent
+    public var yellow: GenericColor.ColorComponent
+    public var key: GenericColor.ColorComponent
+    @_implements(Swift.Equatable, ==(_:_:)) public static func __derived_struct_equals(_ a: GenericColor.CMYK.Container, _ b: GenericColor.CMYK.Container) -> Swift.Bool
   }
 }
-extension GenericColor::CMYK.GenericColor::Container {
-  public func with(cyan: GenericColor::ColorComponent? = nil, magenta: GenericColor::ColorComponent? = nil, yellow: GenericColor::ColorComponent? = nil, key: GenericColor::ColorComponent? = nil) -> GenericColor::CMYK.GenericColor::Container
+extension GenericColor.CMYK.Container {
+  public func with(cyan: GenericColor.ColorComponent? = nil, magenta: GenericColor.ColorComponent? = nil, yellow: GenericColor.ColorComponent? = nil, key: GenericColor.ColorComponent? = nil) -> GenericColor.CMYK.Container
 }
-extension GenericColor::Color {
-  public func map<T>(_ transform: (Space.Container) -> T.Container) -> GenericColor::Color<T> where T : GenericColor::ColorSpace
-  public func flatMap<T>(_ transform: (GenericColor::Color<Space>) -> GenericColor::Color<T>) -> GenericColor::Color<T> where T : GenericColor::ColorSpace
+extension GenericColor.Color {
+  public func map<T>(_ transform: (Space.Container) -> T.Container) -> GenericColor.Color<T> where T : GenericColor.ColorSpace
+  public func flatMap<T>(_ transform: (GenericColor.Color<Space>) -> GenericColor.Color<T>) -> GenericColor.Color<T> where T : GenericColor.ColorSpace
 }
-extension GenericColor::Color where Space == GenericColor::RGB {
-  public func convert<T>(to space: T.Type = T.self) -> GenericColor::Color<T> where T : GenericColor::ColorSpace, T.Container : GenericColor::InitializableByRGBContainer
+extension GenericColor.Color where Space == GenericColor.RGB {
+  public func convert<T>(to space: T.Type = T.self) -> GenericColor.Color<T> where T : GenericColor.ColorSpace, T.Container : GenericColor.InitializableByRGBContainer
 }
-extension GenericColor::Color where Space == GenericColor::HSB {
-  public func convert<T>(to space: T.Type = T.self) -> GenericColor::Color<T> where T : GenericColor::ColorSpace, T.Container : GenericColor::InitializableByHSBContainer
+extension GenericColor.Color where Space == GenericColor.HSB {
+  public func convert<T>(to space: T.Type = T.self) -> GenericColor.Color<T> where T : GenericColor.ColorSpace, T.Container : GenericColor.InitializableByHSBContainer
 }
-extension GenericColor::Color where Space == GenericColor::CMYK {
-  public func convert<T>(to space: T.Type = T.self) -> GenericColor::Color<T> where T : GenericColor::ColorSpace, T.Container : GenericColor::InitializableByCMYKContainer
+extension GenericColor.Color where Space == GenericColor.CMYK {
+  public func convert<T>(to space: T.Type = T.self) -> GenericColor.Color<T> where T : GenericColor.ColorSpace, T.Container : GenericColor.InitializableByCMYKContainer
 }
-extension GenericColor::Color : Swift::Codable where Space.Container : Swift::Decodable, Space.Container : Swift::Encodable {
-  public func encode(to encoder: any Swift::Encoder) throws
-  public init(from decoder: any Swift::Decoder) throws
+extension GenericColor.Color : Swift.Codable where Space.Container : Swift.Decodable, Space.Container : Swift.Encodable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
-extension GenericColor::Color : Swift::_ExpressibleByColorLiteral where Space.Container : GenericColor::InitializableByRGBContainer {
-  public init(_colorLiteralRed red: Swift::Float, green: Swift::Float, blue: Swift::Float, alpha: Swift::Float)
+extension GenericColor.Color : Swift._ExpressibleByColorLiteral where Space.Container : GenericColor.InitializableByRGBContainer {
+  public init(_colorLiteralRed red: Swift.Float, green: Swift.Float, blue: Swift.Float, alpha: Swift.Float)
 }
-@dynamicMemberLookup public struct Color<Space> : Swift::Equatable where Space : GenericColor::ColorSpace {
+@dynamicMemberLookup public struct Color<Space> : Swift.Equatable where Space : GenericColor.ColorSpace {
   internal var container: Space.Container
-  public var alpha: GenericColor::ColorComponent
-  public subscript<T>(dynamicMember keyPath: Swift::KeyPath<Space.Container, T>) -> T {
+  public var alpha: GenericColor.ColorComponent
+  public subscript<T>(dynamicMember keyPath: Swift.KeyPath<Space.Container, T>) -> T {
     get
   }
-  public subscript<T>(dynamicMember keyPath: Swift::WritableKeyPath<Space.Container, T>) -> T {
+  public subscript<T>(dynamicMember keyPath: Swift.WritableKeyPath<Space.Container, T>) -> T {
     get
     set
   }
-  public static func == (lhs: GenericColor::Color<Space>, rhs: GenericColor::Color<Space>) -> Swift::Bool
+  public static func == (lhs: GenericColor.Color<Space>, rhs: GenericColor.Color<Space>) -> Swift.Bool
 }
-extension GenericColor::Color where Space.Container : GenericColor::RGBProvider {
-  public func hex(uppercase: Swift::Bool = false, hashTagPrefix: Swift::Bool = false) -> Swift::String
+extension GenericColor.Color where Space.Container : GenericColor.RGBProvider {
+  public func hex(uppercase: Swift.Bool = false, hashTagPrefix: Swift.Bool = false) -> Swift.String
 }
-extension GenericColor::Color : GenericColor::RGBAInitializable where Space == GenericColor::RGB {
-  public init(red: GenericColor::ColorComponent, green: GenericColor::ColorComponent, blue: GenericColor::ColorComponent, alpha: GenericColor::ColorComponent = .max)
-  @inlinable public init(white value: GenericColor::ColorComponent = .max, alpha: GenericColor::ColorComponent = .max) {
+extension GenericColor.Color : GenericColor.RGBAInitializable where Space == GenericColor.RGB {
+  public init(red: GenericColor.ColorComponent, green: GenericColor.ColorComponent, blue: GenericColor.ColorComponent, alpha: GenericColor.ColorComponent = .max)
+  @inlinable public init(white value: GenericColor.ColorComponent = .max, alpha: GenericColor.ColorComponent = .max) {
     self.init(
       red: value,
       green: value,
@@ -71,294 +71,294 @@ extension GenericColor::Color : GenericColor::RGBAInitializable where Space == G
       alpha: alpha
     )
   }
-  public func with(red: GenericColor::ColorComponent? = nil, green: GenericColor::ColorComponent? = nil, blue: GenericColor::ColorComponent? = nil, alpha: GenericColor::ColorComponent? = nil) -> GenericColor::Color<Space>
+  public func with(red: GenericColor.ColorComponent? = nil, green: GenericColor.ColorComponent? = nil, blue: GenericColor.ColorComponent? = nil, alpha: GenericColor.ColorComponent? = nil) -> GenericColor.Color<Space>
 }
-extension GenericColor::Color where Space == GenericColor::HSB {
-  public init(hue: GenericColor::ColorComponent = .max, saturation: GenericColor::ColorComponent = .max, brightness: GenericColor::ColorComponent = .max, alpha: GenericColor::ColorComponent = .max)
-  public func with(hue: GenericColor::ColorComponent? = nil, saturation: GenericColor::ColorComponent? = nil, brightness: GenericColor::ColorComponent? = nil, alpha: GenericColor::ColorComponent? = nil) -> GenericColor::Color<Space>
+extension GenericColor.Color where Space == GenericColor.HSB {
+  public init(hue: GenericColor.ColorComponent = .max, saturation: GenericColor.ColorComponent = .max, brightness: GenericColor.ColorComponent = .max, alpha: GenericColor.ColorComponent = .max)
+  public func with(hue: GenericColor.ColorComponent? = nil, saturation: GenericColor.ColorComponent? = nil, brightness: GenericColor.ColorComponent? = nil, alpha: GenericColor.ColorComponent? = nil) -> GenericColor.Color<Space>
 }
-extension GenericColor::Color where Space == GenericColor::CMYK {
-  public init(cyan: GenericColor::ColorComponent = .min, magenta: GenericColor::ColorComponent = .min, yellow: GenericColor::ColorComponent = .min, key: GenericColor::ColorComponent = .min, alpha: GenericColor::ColorComponent = .max)
-  public func with(cyan: GenericColor::ColorComponent? = nil, magenta: GenericColor::ColorComponent? = nil, yellow: GenericColor::ColorComponent? = nil, key: GenericColor::ColorComponent? = nil, alpha: GenericColor::ColorComponent? = nil) -> GenericColor::Color<Space>
+extension GenericColor.Color where Space == GenericColor.CMYK {
+  public init(cyan: GenericColor.ColorComponent = .min, magenta: GenericColor.ColorComponent = .min, yellow: GenericColor.ColorComponent = .min, key: GenericColor.ColorComponent = .min, alpha: GenericColor.ColorComponent = .max)
+  public func with(cyan: GenericColor.ColorComponent? = nil, magenta: GenericColor.ColorComponent? = nil, yellow: GenericColor.ColorComponent? = nil, key: GenericColor.ColorComponent? = nil, alpha: GenericColor.ColorComponent? = nil) -> GenericColor.Color<Space>
 }
-public struct ColorComponent : Swift::Equatable, Swift::Comparable, Swift::Codable, Swift::AdditiveArithmetic {
-  @_hasInitialValue public static var zero: GenericColor::ColorComponent
-  private var _value: Foundation::Decimal
-  public static var max: GenericColor::ColorComponent {
+public struct ColorComponent : Swift.Equatable, Swift.Comparable, Swift.Codable, Swift.AdditiveArithmetic {
+  @_hasInitialValue public static var zero: GenericColor.ColorComponent
+  private var _value: Foundation.Decimal
+  public static var max: GenericColor.ColorComponent {
     get
   }
-  public static var min: GenericColor::ColorComponent {
+  public static var min: GenericColor.ColorComponent {
     get
   }
-  @inlinable public static func == (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> Swift::Bool { lhs.value == rhs.value }
-  public var value: Foundation::Decimal {
+  @inlinable public static func == (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> Swift.Bool { lhs.value == rhs.value }
+  public var value: Foundation.Decimal {
     get
     set
   }
-  @inlinable public var decimalValue: Foundation::Decimal {
+  @inlinable public var decimalValue: Foundation.Decimal {
     get { exactValue }
     set { exactValue = newValue }
   }
-  @inlinable public var decimalByteValue: Foundation::Decimal {
+  @inlinable public var decimalByteValue: Foundation.Decimal {
     get { exactByteValue }
     set { exactByteValue = newValue }
   }
-  public var exactValue: Foundation::Decimal {
+  public var exactValue: Foundation.Decimal {
     get
     set
   }
-  @inlinable public var exactByteValue: Foundation::Decimal {
+  @inlinable public var exactByteValue: Foundation.Decimal {
     get { exactValue * 255 }
     set { self = .byte(newValue) }
   }
-  @inlinable public var exactDegValue: Foundation::Decimal {
+  @inlinable public var exactDegValue: Foundation.Decimal {
     get { exactValue * 360 }
     set { self = .deg(newValue) }
   }
-  public var doubleValue: Swift::Double {
+  public var doubleValue: Swift.Double {
     get
     set
   }
-  public var doubleByteValue: Swift::Double {
+  public var doubleByteValue: Swift.Double {
     get
     set
   }
-  public var doubleDegValue: Swift::Double {
+  public var doubleDegValue: Swift.Double {
     get
     set
   }
-  public var floatValue: Swift::Float {
+  public var floatValue: Swift.Float {
     get
     set
   }
-  public var floatByteValue: Swift::Float {
+  public var floatByteValue: Swift.Float {
     get
     set
   }
-  public var floatDegValue: Swift::Float {
+  public var floatDegValue: Swift.Float {
     get
     set
   }
-  public var byteValue: Swift::Int {
+  public var byteValue: Swift.Int {
     get
     set
   }
-  public var degValue: Swift::Int {
+  public var degValue: Swift.Int {
     get
     set
   }
-  public func hex(uppercase: Swift::Bool = false) -> Swift::String
-  public init(value: Foundation::Decimal = 0)
-  @inlinable public static func raw(_ value: Swift::Float) -> GenericColor::ColorComponent { .raw(Double(value)) }
-  @inlinable public static func raw(_ value: Swift::Double) -> GenericColor::ColorComponent { .raw(Decimal(value)) }
-  @inlinable public static func raw(_ value: Swift::Int) -> GenericColor::ColorComponent { .raw(Decimal(value)) }
-  @inlinable public static func raw(_ value: Swift::UInt8) -> GenericColor::ColorComponent { .raw(Decimal(value)) }
-  @inlinable public static func raw(_ value: Foundation::Decimal) -> GenericColor::ColorComponent { .init(value: value) }
-  @inlinable public static func byte(_ value: Swift::Float) -> GenericColor::ColorComponent { .byte(Double(value)) }
-  @inlinable public static func byte(_ value: Swift::Double) -> GenericColor::ColorComponent { .byte(Decimal(value)) }
-  @inlinable public static func byte(_ value: Swift::Int) -> GenericColor::ColorComponent { .byte(Decimal(value)) }
-  @inlinable public static func byte(_ value: Swift::UInt8) -> GenericColor::ColorComponent { .byte(Decimal(value)) }
-  @inlinable public static func byte(_ value: Foundation::Decimal) -> GenericColor::ColorComponent { .init(value: value / 255) }
-  @inlinable public static func deg(_ value: Swift::Float) -> GenericColor::ColorComponent { .deg(Double(value)) }
-  @inlinable public static func deg(_ value: Swift::Double) -> GenericColor::ColorComponent { .deg(Decimal(value)) }
-  @inlinable public static func deg(_ value: Swift::Int) -> GenericColor::ColorComponent { .deg(Decimal(value)) }
-  @inlinable public static func deg(_ value: Swift::UInt8) -> GenericColor::ColorComponent { .deg(Decimal(value)) }
-  @inlinable public static func deg(_ value: Foundation::Decimal) -> GenericColor::ColorComponent { .init(value: value / 360) }
-  public static func === (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> Swift::Bool
-  public static func / (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> GenericColor::ColorComponent
-  public static func * (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> GenericColor::ColorComponent
-  public static func + (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> GenericColor::ColorComponent
-  public static func - (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> GenericColor::ColorComponent
-  public static func < (lhs: GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) -> Swift::Bool
-  @inlinable public static func += (lhs: inout GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) {
+  public func hex(uppercase: Swift.Bool = false) -> Swift.String
+  public init(value: Foundation.Decimal = 0)
+  @inlinable public static func raw(_ value: Swift.Float) -> GenericColor.ColorComponent { .raw(Double(value)) }
+  @inlinable public static func raw(_ value: Swift.Double) -> GenericColor.ColorComponent { .raw(Decimal(value)) }
+  @inlinable public static func raw(_ value: Swift.Int) -> GenericColor.ColorComponent { .raw(Decimal(value)) }
+  @inlinable public static func raw(_ value: Swift.UInt8) -> GenericColor.ColorComponent { .raw(Decimal(value)) }
+  @inlinable public static func raw(_ value: Foundation.Decimal) -> GenericColor.ColorComponent { .init(value: value) }
+  @inlinable public static func byte(_ value: Swift.Float) -> GenericColor.ColorComponent { .byte(Double(value)) }
+  @inlinable public static func byte(_ value: Swift.Double) -> GenericColor.ColorComponent { .byte(Decimal(value)) }
+  @inlinable public static func byte(_ value: Swift.Int) -> GenericColor.ColorComponent { .byte(Decimal(value)) }
+  @inlinable public static func byte(_ value: Swift.UInt8) -> GenericColor.ColorComponent { .byte(Decimal(value)) }
+  @inlinable public static func byte(_ value: Foundation.Decimal) -> GenericColor.ColorComponent { .init(value: value / 255) }
+  @inlinable public static func deg(_ value: Swift.Float) -> GenericColor.ColorComponent { .deg(Double(value)) }
+  @inlinable public static func deg(_ value: Swift.Double) -> GenericColor.ColorComponent { .deg(Decimal(value)) }
+  @inlinable public static func deg(_ value: Swift.Int) -> GenericColor.ColorComponent { .deg(Decimal(value)) }
+  @inlinable public static func deg(_ value: Swift.UInt8) -> GenericColor.ColorComponent { .deg(Decimal(value)) }
+  @inlinable public static func deg(_ value: Foundation.Decimal) -> GenericColor.ColorComponent { .init(value: value / 360) }
+  public static func === (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> Swift.Bool
+  public static func / (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> GenericColor.ColorComponent
+  public static func * (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> GenericColor.ColorComponent
+  public static func + (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> GenericColor.ColorComponent
+  public static func - (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> GenericColor.ColorComponent
+  public static func < (lhs: GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) -> Swift.Bool
+  @inlinable public static func += (lhs: inout GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) {
     lhs = lhs + rhs
   }
-  @inlinable public static func -= (lhs: inout GenericColor::ColorComponent, rhs: GenericColor::ColorComponent) {
+  @inlinable public static func -= (lhs: inout GenericColor.ColorComponent, rhs: GenericColor.ColorComponent) {
     lhs = lhs - rhs
   }
-  public func encode(to encoder: any Swift::Encoder) throws
-  public init(from decoder: any Swift::Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
-extension GenericColor::ColorComponent : Swift::ExpressibleByFloatLiteral, Swift::ExpressibleByIntegerLiteral {
-  @inlinable public init(integerLiteral value: Swift::Double) {
+extension GenericColor.ColorComponent : Swift.ExpressibleByFloatLiteral, Swift.ExpressibleByIntegerLiteral {
+  @inlinable public init(integerLiteral value: Swift.Double) {
     self.init(floatLiteral: value)
   }
-  @inlinable public init(floatLiteral value: Swift::Double) {
+  @inlinable public init(floatLiteral value: Swift.Double) {
     self = .raw(value)
   }
-  public typealias FloatLiteralType = Swift::Double
-  public typealias IntegerLiteralType = Swift::Double
+  public typealias FloatLiteralType = Swift.Double
+  public typealias IntegerLiteralType = Swift.Double
 }
-public protocol ColorSpace : GenericColor::StaticallyNamedType {
-  associatedtype Container : Swift::Equatable
+public protocol ColorSpace : GenericColor.StaticallyNamedType {
+  associatedtype Container : Swift.Equatable
 }
-extension GenericColor::CMYK.GenericColor::Container : GenericColor::InitializableByCMYKContainer, GenericColor::CMYKProvider {
-  public init(from container: GenericColor::CMYK.GenericColor::Container)
-  public var cmyk: GenericColor::CMYK.GenericColor::Container {
+extension GenericColor.CMYK.Container : GenericColor.InitializableByCMYKContainer, GenericColor.CMYKProvider {
+  public init(from container: GenericColor.CMYK.Container)
+  public var cmyk: GenericColor.CMYK.Container {
     get
   }
 }
-extension GenericColor::CMYK.GenericColor::Container : GenericColor::InitializableByRGBContainer, GenericColor::RGBProvider {
-  public init(from container: GenericColor::RGB.GenericColor::Container)
-  public var rgb: GenericColor::RGB.GenericColor::Container {
+extension GenericColor.CMYK.Container : GenericColor.InitializableByRGBContainer, GenericColor.RGBProvider {
+  public init(from container: GenericColor.RGB.Container)
+  public var rgb: GenericColor.RGB.Container {
     get
   }
 }
-extension GenericColor::CMYK.GenericColor::Container : GenericColor::InitializableByHSBContainer, GenericColor::HSBProvider {
-  public init(from container: GenericColor::HSB.GenericColor::Container)
-  public var hsb: GenericColor::HSB.GenericColor::Container {
+extension GenericColor.CMYK.Container : GenericColor.InitializableByHSBContainer, GenericColor.HSBProvider {
+  public init(from container: GenericColor.HSB.Container)
+  public var hsb: GenericColor.HSB.Container {
     get
   }
 }
 public protocol InitializableByRGBContainer {
-  init(from container: GenericColor::RGB.GenericColor::Container)
+  init(from container: GenericColor.RGB.Container)
 }
 public protocol RGBProvider {
-  var rgb: GenericColor::RGB.GenericColor::Container { get }
+  var rgb: GenericColor.RGB.Container { get }
 }
 public protocol InitializableByHSBContainer {
-  init(from container: GenericColor::HSB.GenericColor::Container)
+  init(from container: GenericColor.HSB.Container)
 }
 public protocol HSBProvider {
-  var hsb: GenericColor::HSB.GenericColor::Container { get }
+  var hsb: GenericColor.HSB.Container { get }
 }
 public protocol InitializableByCMYKContainer {
-  init(from container: GenericColor::CMYK.GenericColor::Container)
+  init(from container: GenericColor.CMYK.Container)
 }
 public protocol CMYKProvider {
-  var cmyk: GenericColor::CMYK.GenericColor::Container { get }
+  var cmyk: GenericColor.CMYK.Container { get }
 }
-extension GenericColor::HSB.GenericColor::Container : GenericColor::InitializableByHSBContainer, GenericColor::HSBProvider {
-  public init(from container: GenericColor::HSB.GenericColor::Container)
-  public var hsb: GenericColor::HSB.GenericColor::Container {
+extension GenericColor.HSB.Container : GenericColor.InitializableByHSBContainer, GenericColor.HSBProvider {
+  public init(from container: GenericColor.HSB.Container)
+  public var hsb: GenericColor.HSB.Container {
     get
   }
 }
-extension GenericColor::HSB.GenericColor::Container : GenericColor::InitializableByRGBContainer, GenericColor::RGBProvider {
-  public init(from container: GenericColor::RGB.GenericColor::Container)
-  public var rgb: GenericColor::RGB.GenericColor::Container {
+extension GenericColor.HSB.Container : GenericColor.InitializableByRGBContainer, GenericColor.RGBProvider {
+  public init(from container: GenericColor.RGB.Container)
+  public var rgb: GenericColor.RGB.Container {
     get
   }
 }
-extension GenericColor::HSB.GenericColor::Container : GenericColor::InitializableByCMYKContainer, GenericColor::CMYKProvider {
-  public init(from container: GenericColor::CMYK.GenericColor::Container)
-  public var cmyk: GenericColor::CMYK.GenericColor::Container {
+extension GenericColor.HSB.Container : GenericColor.InitializableByCMYKContainer, GenericColor.CMYKProvider {
+  public init(from container: GenericColor.CMYK.Container)
+  public var cmyk: GenericColor.CMYK.Container {
     get
   }
-  public func cmyk(key: GenericColor::ColorComponent) -> GenericColor::CMYK.GenericColor::Container
+  public func cmyk(key: GenericColor.ColorComponent) -> GenericColor.CMYK.Container
 }
-extension GenericColor::RGB.GenericColor::Container : GenericColor::InitializableByRGBContainer, GenericColor::RGBProvider {
-  public init(from container: GenericColor::RGB.GenericColor::Container)
-  public var rgb: GenericColor::RGB.GenericColor::Container {
-    get
-  }
-}
-extension GenericColor::RGB.GenericColor::Container : GenericColor::InitializableByHSBContainer, GenericColor::HSBProvider {
-  public init(from container: GenericColor::HSB.GenericColor::Container)
-  public var hsb: GenericColor::HSB.GenericColor::Container {
+extension GenericColor.RGB.Container : GenericColor.InitializableByRGBContainer, GenericColor.RGBProvider {
+  public init(from container: GenericColor.RGB.Container)
+  public var rgb: GenericColor.RGB.Container {
     get
   }
 }
-extension GenericColor::RGB.GenericColor::Container : GenericColor::InitializableByCMYKContainer, GenericColor::CMYKProvider {
-  public init(from container: GenericColor::CMYK.GenericColor::Container)
-  public var cmyk: GenericColor::CMYK.GenericColor::Container {
+extension GenericColor.RGB.Container : GenericColor.InitializableByHSBContainer, GenericColor.HSBProvider {
+  public init(from container: GenericColor.HSB.Container)
+  public var hsb: GenericColor.HSB.Container {
     get
   }
-  public func cmyk(key: GenericColor::ColorComponent) -> GenericColor::CMYK.GenericColor::Container
 }
-extension GenericColor::HSB.GenericColor::Container : Swift::Codable {
-  public func encode(to encoder: any Swift::Encoder) throws
-  public init(from decoder: any Swift::Decoder) throws
-}
-public enum HSB : GenericColor::ColorSpace {
-  public struct Container : Swift::Equatable {
-    public var hue: GenericColor::ColorComponent
-    public var saturation: GenericColor::ColorComponent
-    public var brightness: GenericColor::ColorComponent
-    @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_struct_equals(_ a: GenericColor::HSB.GenericColor::Container, _ b: GenericColor::HSB.GenericColor::Container) -> Swift::Bool
-  }
-}
-extension GenericColor::HSB.GenericColor::Container {
-  public func with(hue: GenericColor::ColorComponent? = nil, saturation: GenericColor::ColorComponent? = nil, brightness: GenericColor::ColorComponent? = nil) -> GenericColor::HSB.GenericColor::Container
-}
-extension GenericColor::ColorComponent {
-  public static func raw(_ value: CoreFoundation::CGFloat) -> GenericColor::ColorComponent
-  public static func byte(_ value: CoreFoundation::CGFloat) -> GenericColor::ColorComponent
-}
-extension AppKit::NSColor {
-  public var generic: GenericColor::Color<GenericColor::RGB> {
+extension GenericColor.RGB.Container : GenericColor.InitializableByCMYKContainer, GenericColor.CMYKProvider {
+  public init(from container: GenericColor.CMYK.Container)
+  public var cmyk: GenericColor.CMYK.Container {
     get
   }
-  public var genericRGB: GenericColor::Color<GenericColor::RGB> {
+  public func cmyk(key: GenericColor.ColorComponent) -> GenericColor.CMYK.Container
+}
+extension GenericColor.HSB.Container : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum HSB : GenericColor.ColorSpace {
+  public struct Container : Swift.Equatable {
+    public var hue: GenericColor.ColorComponent
+    public var saturation: GenericColor.ColorComponent
+    public var brightness: GenericColor.ColorComponent
+    @_implements(Swift.Equatable, ==(_:_:)) public static func __derived_struct_equals(_ a: GenericColor.HSB.Container, _ b: GenericColor.HSB.Container) -> Swift.Bool
+  }
+}
+extension GenericColor.HSB.Container {
+  public func with(hue: GenericColor.ColorComponent? = nil, saturation: GenericColor.ColorComponent? = nil, brightness: GenericColor.ColorComponent? = nil) -> GenericColor.HSB.Container
+}
+extension GenericColor.ColorComponent {
+  public static func raw(_ value: CoreFoundation.CGFloat) -> GenericColor.ColorComponent
+  public static func byte(_ value: CoreFoundation.CGFloat) -> GenericColor.ColorComponent
+}
+extension AppKit.NSColor {
+  public var generic: GenericColor.Color<GenericColor.RGB> {
     get
   }
-  public var genericHSB: GenericColor::Color<GenericColor::HSB> {
+  public var genericRGB: GenericColor.Color<GenericColor.RGB> {
     get
   }
-  convenience public init<Space>(_ genericColor: GenericColor::Color<Space>) where Space : GenericColor::ColorSpace, Space.Container : GenericColor::RGBProvider
+  public var genericHSB: GenericColor.Color<GenericColor.HSB> {
+    get
+  }
+  convenience public init<Space>(_ genericColor: GenericColor.Color<Space>) where Space : GenericColor.ColorSpace, Space.Container : GenericColor.RGBProvider
 }
-extension AppKit::NSColor {
-  convenience public init?(hex: Swift::String)
+extension AppKit.NSColor {
+  convenience public init?(hex: Swift.String)
 }
-extension GenericColor::Color where Space.Container : GenericColor::RGBProvider {
-  public var cocoaColor: AppKit::NSColor {
+extension GenericColor.Color where Space.Container : GenericColor.RGBProvider {
+  public var cocoaColor: AppKit.NSColor {
     get
   }
 }
 @available(macOS 10.15, iOS 13, *)
-extension SwiftUICore::Color {
-  public init<Space>(_ genericColor: GenericColor::Color<Space>) where Space : GenericColor::ColorSpace, Space.Container : GenericColor::RGBProvider
+extension SwiftUICore.Color {
+  public init<Space>(_ genericColor: GenericColor.Color<Space>) where Space : GenericColor.ColorSpace, Space.Container : GenericColor.RGBProvider
 }
 @available(macOS 10.15, iOS 13, *)
-extension SwiftUICore::Color {
-  public init?(hex: Swift::String)
+extension SwiftUICore.Color {
+  public init?(hex: Swift.String)
 }
 @available(macOS 10.15, iOS 13, *)
-extension GenericColor::Color where Space.Container : GenericColor::RGBProvider {
-  public var color: SwiftUICore::Color {
+extension GenericColor.Color where Space.Container : GenericColor.RGBProvider {
+  public var color: SwiftUICore.Color {
     get
   }
 }
-extension GenericColor::Color where Space.Container : GenericColor::RGBProvider {
-  public var cgColor: CoreGraphics::CGColor {
+extension GenericColor.Color where Space.Container : GenericColor.RGBProvider {
+  public var cgColor: CoreGraphics.CGColor {
     get
   }
 }
-extension GenericColor::RGB.GenericColor::Container : Swift::Codable {
-  public func encode(to encoder: any Swift::Encoder) throws
-  public init(from decoder: any Swift::Decoder) throws
+extension GenericColor.RGB.Container : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
-public enum RGB : GenericColor::ColorSpace {
-  public struct Container : Swift::Equatable {
-    public var red: GenericColor::ColorComponent
-    public var green: GenericColor::ColorComponent
-    public var blue: GenericColor::ColorComponent
-    @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_struct_equals(_ a: GenericColor::RGB.GenericColor::Container, _ b: GenericColor::RGB.GenericColor::Container) -> Swift::Bool
+public enum RGB : GenericColor.ColorSpace {
+  public struct Container : Swift.Equatable {
+    public var red: GenericColor.ColorComponent
+    public var green: GenericColor.ColorComponent
+    public var blue: GenericColor.ColorComponent
+    @_implements(Swift.Equatable, ==(_:_:)) public static func __derived_struct_equals(_ a: GenericColor.RGB.Container, _ b: GenericColor.RGB.Container) -> Swift.Bool
   }
 }
-extension GenericColor::RGB.GenericColor::Container {
-  public func with(red: GenericColor::ColorComponent? = nil, green: GenericColor::ColorComponent? = nil, blue: GenericColor::ColorComponent? = nil) -> GenericColor::RGB.GenericColor::Container
+extension GenericColor.RGB.Container {
+  public func with(red: GenericColor.ColorComponent? = nil, green: GenericColor.ColorComponent? = nil, blue: GenericColor.ColorComponent? = nil) -> GenericColor.RGB.Container
 }
 public protocol RGBAInitializable {
-  init(red: GenericColor::ColorComponent, green: GenericColor::ColorComponent, blue: GenericColor::ColorComponent, alpha: GenericColor::ColorComponent)
+  init(red: GenericColor.ColorComponent, green: GenericColor.ColorComponent, blue: GenericColor.ColorComponent, alpha: GenericColor.ColorComponent)
 }
-extension GenericColor::RGBAInitializable {
-  public init?(hex: Swift::String)
-  public init?(rgb value: Swift::Int)
-  public init?(rgba value: Swift::UInt32)
-  public static func hex(_ value: Swift::String) -> Self?
-  public static func hex(rgb value: Swift::Int) -> Self?
-  public static func hex(rgba value: Swift::Int) -> Self?
+extension GenericColor.RGBAInitializable {
+  public init?(hex: Swift.String)
+  public init?(rgb value: Swift.Int)
+  public init?(rgba value: Swift.UInt32)
+  public static func hex(_ value: Swift.String) -> Self?
+  public static func hex(rgb value: Swift.Int) -> Self?
+  public static func hex(rgba value: Swift.Int) -> Self?
 }
 public protocol StaticallyNamedType {
-  static var name: Swift::String { get }
-  static var fullName: Swift::String { get }
+  static var name: Swift.String { get }
+  static var fullName: Swift.String { get }
 }
-extension GenericColor::StaticallyNamedType {
-  @inlinable public static var name: Swift::String {
+extension GenericColor.StaticallyNamedType {
+  @inlinable public static var name: Swift.String {
     get { String(describing: self) }
   }
-  @inlinable public static var fullName: Swift::String {
+  @inlinable public static var fullName: Swift.String {
     get { String(reflecting: self) }
   }
 }
